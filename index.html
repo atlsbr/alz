@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#FDF6EE">
+<title>Wlamir & Nide 💛</title>
+<style>
+/* ══════════════════════════════════════════════════
+   CUIDAR COM AMOR — Wlamir & Nide  v2.1
+   Responsivo portrait + landscape, bug-free
+══════════════════════════════════════════════════ */
+:root {
+  --bg:#FDF6EE; --surface:#FFFFFF;
+  --warm1:#E8936A; --warm2:#F2B880;
+  --green:#6BAE8E; --blue:#7AAFC9; --lilac:#A98DC8; --red:#D94F4F;
+  --text:#2A2015; --muted:#8C7A63; --border:#EBE0D4; --shadow:rgba(60,30,0,.09);
+  --radius:22px; --ff:Georgia,'Times New Roman',serif;
+  --t-xs:17px; --t-sm:21px; --t-md:26px; --t-lg:34px; --t-xl:44px;
+}
+body.elder { --t-xs:21px; --t-sm:26px; --t-md:32px; --t-lg:42px; --t-xl:52px; }
+
+*,*::before,*::after { margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100vh;font-size:var(--t-sm);line-height:1.5;overflow-x:hidden; }
+
+/* Animações */
+@keyframes fadeUp   {from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn   {from{opacity:0}to{opacity:1}}
+@keyframes heartbeat{0%,100%{transform:scale(1)}14%{transform:scale(1.14)}42%{transform:scale(1.07)}}
+@keyframes sosGlow  {0%,100%{box-shadow:0 6px 32px rgba(217,79,79,.38),0 0 0 0 rgba(217,79,79,.18)}50%{box-shadow:0 6px 50px rgba(217,79,79,.55),0 0 0 16px rgba(217,79,79,0)}}
+@keyframes ripple   {from{transform:scale(0);opacity:.35}to{transform:scale(4);opacity:0}}
+@keyframes bounce   {0%,100%{transform:scale(1)}40%{transform:scale(1.18)}60%{transform:scale(.96)}}
+
+/* ═══ TOPBAR ═══════════════════════════════════════ */
+#orient-bar {
+  background:linear-gradient(135deg,#FFF0DC,#FFE4C4);
+  border-bottom:2.5px solid var(--border);
+  padding:10px 16px 8px; text-align:center;
+  position:sticky;top:0;z-index:200;
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
+}
+#orient-day  { font-size:var(--t-md);font-weight:700;color:var(--warm1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+#orient-extra{ font-size:var(--t-xs);color:#6B5840;margin-top:2px; }
+#orient-time { font-size:var(--t-xs);color:var(--muted);margin-top:1px; }
+@media (orientation:landscape) and (max-height:500px) {
+  #orient-bar  { padding:5px 16px 4px; }
+  #orient-day  { font-size:var(--t-sm); }
+  #orient-extra,#orient-time { display:none; }
+}
+
+/* ═══ TELAS ════════════════════════════════════════ */
+.screen { display:none;padding-bottom:88px;min-height:100vh; }
+.screen.active { display:block;animation:fadeUp .3s ease; }
+#sos { display:none; }
+#sos.active { display:flex; }
+
+/* Cabeçalho interno */
+.s-header {
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px 10px;
+  position:sticky;top:0;z-index:100;
+  background:var(--bg);border-bottom:2px solid var(--border);margin-bottom:6px;
+}
+.back-btn {
+  width:52px;height:52px;border-radius:50%;
+  border:2px solid var(--border);background:var(--surface);
+  box-shadow:0 2px 10px var(--shadow);font-size:22px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:transform .15s;color:var(--text);
+}
+.back-btn:active{transform:scale(.88);}
+.s-title { font-size:var(--t-lg);font-weight:700;line-height:1.1; }
+
+/* ═══ HOME ══════════════════════════════════════════ */
+#home { padding-bottom:88px; }
+.home-greeting { text-align:center;padding:16px 16px 12px; }
+.home-greeting .waving { font-size:42px;animation:heartbeat 3s ease-in-out infinite;display:inline-block; }
+.hello-name { font-size:var(--t-xl);font-weight:700;line-height:1.1;margin:7px 0 3px; }
+.hello-sub  { font-size:var(--t-sm);color:var(--muted); }
+
+.location-chip {
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  width:fit-content;margin:0 auto 14px;
+  background:linear-gradient(135deg,#E8F8EF,#D4F0E2);
+  border:2px solid #9ADCC0;border-radius:40px;
+  padding:8px 18px;font-size:var(--t-sm);font-weight:700;color:#2A7A56;
+}
+
+/* Grid 2×2 portrait */
+.main-grid { display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 14px; }
+.m-btn {
+  border:none;border-radius:var(--radius);
+  min-height:138px;padding:20px 12px;
+  cursor:pointer;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 5px 18px var(--shadow);
+  transition:transform .15s,box-shadow .15s;
+  position:relative;overflow:hidden;-webkit-user-select:none;
+}
+.m-btn:active { transform:scale(.94);box-shadow:0 2px 6px var(--shadow); }
+.m-btn .m-icon  { font-size:42px;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.15)); }
+.m-btn .m-label { font-size:var(--t-sm);font-weight:700;color:#fff;text-align:center;line-height:1.2;text-shadow:0 1px 3px rgba(0,0,0,.2); }
+.m-btn .m-badge { position:absolute;top:9px;right:10px;background:#fff;color:var(--red);border-radius:20px;padding:2px 9px;font-size:16px;font-weight:900;opacity:0;transition:opacity .3s; }
+.m-btn .m-badge.show { opacity:1; }
+.m-btn::after { content:'';position:absolute;top:50%;left:50%;width:50px;height:50px;margin:-25px 0 0 -25px;border-radius:50%;background:rgba(255,255,255,.28);transform:scale(0);pointer-events:none; }
+.m-btn:active::after { animation:ripple .5s ease-out; }
+.btn-remedios  { background:linear-gradient(145deg,#E8936A,#D06840); }
+.btn-rotina    { background:linear-gradient(145deg,#6BAE8E,#4A9070); }
+.btn-familia   { background:linear-gradient(145deg,#7AAFC9,#5090B0); }
+.btn-cognitivo { background:linear-gradient(145deg,#A98DC8,#8A6AAA); }
+
+/* Landscape: 4 colunas */
+@media (orientation:landscape) and (max-height:500px) {
+  .home-greeting { padding:6px 16px 4px; }
+  .home-greeting .waving { font-size:30px; }
+  .hello-name { font-size:var(--t-lg);margin:4px 0 2px; }
+  .location-chip { margin-bottom:8px;padding:5px 14px;font-size:var(--t-xs); }
+  .main-grid { grid-template-columns:repeat(4,1fr);gap:9px;padding:0 12px; }
+  .m-btn { min-height:88px;padding:12px 10px; }
+  .m-btn .m-icon { font-size:30px; }
+  .m-btn .m-label { font-size:var(--t-xs); }
+}
+
+/* SOS home */
+.sos-home-btn {
+  width:calc(100% - 28px);margin:12px 14px 0;
+  border:none;border-radius:var(--radius);
+  background:linear-gradient(145deg,#D94F4F,#B83030);
+  color:#fff;font-size:var(--t-md);font-family:var(--ff);font-weight:700;
+  padding:20px 20px;cursor:pointer;
+  box-shadow:0 5px 22px rgba(217,79,79,.32);
+  display:flex;align-items:center;justify-content:center;gap:12px;transition:transform .15s;
+}
+.sos-home-btn:active { transform:scale(.97); }
+@media (orientation:landscape) and (max-height:500px) {
+  .sos-home-btn { padding:12px 20px;margin-top:7px; }
+}
+
+/* Música */
+.music-section { margin:12px 14px 0;background:linear-gradient(135deg,#FFF8F0,#FFF0E0);border:2px solid var(--border);border-radius:var(--radius);padding:14px 12px; }
+.music-title { font-size:var(--t-sm);font-weight:700;color:var(--warm1);margin-bottom:10px;text-align:center; }
+.music-grid  { display:flex;gap:8px; }
+.music-btn   { border:none;border-radius:14px;padding:12px 8px;font-size:var(--t-xs);font-weight:700;font-family:var(--ff);cursor:pointer;flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;transition:all .2s;box-shadow:0 2px 7px var(--shadow);color:#fff; }
+.music-btn:active { transform:scale(.93); }
+.music-btn.playing { outline:3px solid rgba(255,255,255,.65); }
+.music-note { font-size:22px; }
+.mb1{background:linear-gradient(135deg,#7AAFC9,#5090B0);}
+.mb2{background:linear-gradient(135deg,#6BAE8E,#4A9070);}
+.mb3{background:linear-gradient(135deg,#A98DC8,#8A6AAA);}
+#music-now { text-align:center;font-size:var(--t-xs);color:var(--muted);margin-top:7px;display:none; }
+
+/* Modo Idoso */
+.elder-wrap { text-align:center;margin:12px 14px 0; }
+.elder-btn  { background:none;border:2px solid var(--border);border-radius:40px;padding:9px 22px;font-size:var(--t-xs);font-family:var(--ff);color:var(--muted);cursor:pointer;transition:all .2s; }
+.elder-btn.on { background:var(--text);color:#fff;border-color:var(--text); }
+
+/* ═══ REMÉDIOS ══════════════════════════════════════ */
+.alert-banner { margin:8px 14px;background:linear-gradient(135deg,#FFE8E8,#FFD4D4);border:2px solid var(--red);border-radius:var(--radius);padding:13px 16px;display:flex;align-items:center;gap:10px;animation:sosGlow 2.5s infinite; }
+.alert-banner .a-icon { font-size:26px; }
+.alert-banner .a-text { font-size:var(--t-sm);font-weight:700;color:var(--red); }
+.prog-wrap   { margin:6px 14px 0; }
+.prog-bar-bg { background:var(--border);border-radius:10px;height:10px;overflow:hidden; }
+.prog-bar-fill { height:100%;background:linear-gradient(90deg,var(--green),#3A9868);border-radius:10px;transition:width .5s ease; }
+.prog-label  { font-size:var(--t-xs);color:var(--muted);text-align:center;padding:5px 0 0; }
+.med-list    { padding:4px 14px; }
+.med-card    { background:var(--surface);border-radius:var(--radius);margin-bottom:10px;padding:16px 14px;display:flex;align-items:center;gap:11px;box-shadow:0 3px 14px var(--shadow);border-left:7px solid var(--border);transition:all .3s;position:relative; }
+.med-card.taken { border-left-color:var(--green);opacity:.6; }
+.med-card.due   { border-left-color:var(--red);box-shadow:0 3px 16px rgba(217,79,79,.18); }
+.med-card .m-ico  { font-size:32px;flex-shrink:0; }
+.med-card .m-info { flex:1;min-width:0; }
+.med-card .m-name { font-size:var(--t-md);font-weight:700;line-height:1.1; }
+.med-card .m-time { font-size:var(--t-sm);color:var(--muted);margin-top:2px; }
+.med-card .m-dose { font-size:var(--t-xs);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+.btn-took { border:none;background:var(--green);color:#fff;border-radius:13px;padding:11px 13px;font-size:var(--t-sm);font-weight:700;font-family:var(--ff);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .2s;box-shadow:0 2px 8px rgba(107,174,142,.3); }
+.btn-took:disabled { background:#ccc;box-shadow:none;cursor:default; }
+.btn-took:active:not(:disabled) { transform:scale(.9); }
+.med-actions { position:absolute;top:10px;right:10px; }
+.med-del-btn { border:none;background:#FFE8E8;color:var(--red);border-radius:9px;width:32px;height:32px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center; }
+.nide-toggle-wrap { padding:4px 14px 0; }
+.nide-toggle-btn  { border:2px solid var(--border);background:var(--surface);border-radius:13px;padding:10px 14px;font-size:var(--t-xs);font-family:var(--ff);color:var(--muted);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px;width:100%; }
+.nide-toggle-btn.on { border-color:var(--blue);background:#EEF6FF;color:var(--blue); }
+.nide-panel { background:linear-gradient(135deg,#F0F8FF,#E4F0FA);border:2px solid #b0d0e8;border-radius:var(--radius);margin:8px 14px;padding:14px; }
+.nide-panel-title { font-size:var(--t-sm);font-weight:700;color:var(--blue);margin-bottom:9px; }
+.nide-form { display:flex;flex-direction:column;gap:8px; }
+.nide-input { border:2px solid var(--border);border-radius:12px;padding:11px 13px;font-size:var(--t-sm);font-family:var(--ff);background:var(--surface);color:var(--text);width:100%;outline:none;transition:border-color .2s; }
+.nide-input:focus { border-color:var(--blue); }
+.btn-add-med { border:none;border-radius:13px;background:var(--blue);color:#fff;padding:13px;font-size:var(--t-sm);font-family:var(--ff);font-weight:700;cursor:pointer;transition:transform .15s;box-shadow:0 2px 10px rgba(122,175,201,.4); }
+.btn-add-med:active { transform:scale(.96); }
+
+/* ═══ ROTINA ════════════════════════════════════════ */
+.period-block  { margin:6px 14px 0; }
+.period-header { display:flex;align-items:center;gap:10px;padding:11px 14px 6px;font-size:var(--t-md);font-weight:700; }
+.period-ico    { font-size:28px; }
+
+/* TASK ROW — padding-right reserva espaço pro delete */
+.task-row {
+  background:var(--surface);border-radius:16px;margin-bottom:9px;
+  padding:15px 50px 15px 15px;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:0 2px 10px var(--shadow);
+  cursor:pointer;transition:opacity .2s,transform .15s;
+  position:relative;user-select:none;
+}
+.task-row:active { transform:scale(.97); }
+.task-row.done  { opacity:.5; }
+.task-row.done .task-text { text-decoration:line-through;text-decoration-color:var(--green); }
+.task-chk { width:37px;height:37px;border-radius:50%;border:3px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:17px;transition:all .22s;background:var(--surface); }
+.task-row.done .task-chk { background:var(--green);border-color:var(--green);color:#fff; }
+.task-text  { font-size:var(--t-sm);font-weight:600;flex:1;line-height:1.3; }
+.task-emoji { font-size:22px;flex-shrink:0; }
+/* Delete button — isolado com z-index e stopPropagation no JS */
+.task-del-btn { position:absolute;right:9px;top:50%;transform:translateY(-50%);border:none;background:#FFE8E8;color:var(--red);border-radius:9px;width:31px;height:31px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2; }
+.task-del-btn:active { background:#FFCCCC; }
+.add-task-form { background:linear-gradient(135deg,#F0FFF6,#E4FAF0);border:2px solid #9ADCC0;border-radius:15px;margin:6px 0;padding:11px 13px;display:flex;gap:8px;align-items:center; }
+.add-task-input { flex:1;border:2px solid var(--border);border-radius:11px;padding:9px 11px;font-size:var(--t-sm);font-family:var(--ff);background:var(--surface);color:var(--text);outline:none; }
+.add-task-input:focus { border-color:var(--green); }
+.add-task-btn { border:none;border-radius:11px;background:var(--green);color:#fff;padding:9px 15px;font-size:var(--t-sm);font-family:var(--ff);font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0; }
+
+/* ═══ FAMÍLIA ══════════════════════════════════════ */
+.family-grid { display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:6px 14px; }
+@media (orientation:landscape) and (min-width:600px) {
+  .family-grid { grid-template-columns:repeat(3,1fr); }
+}
+.fam-card { background:var(--surface);border-radius:var(--radius);padding:18px 11px 16px;text-align:center;box-shadow:0 3px 15px var(--shadow);cursor:pointer;transition:transform .15s;border:3px solid transparent; }
+.fam-card:active { transform:scale(.95); }
+.fam-avatar { width:76px;height:76px;border-radius:50%;margin:0 auto 11px;font-size:42px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#FFE8CC,#FFD0A8);box-shadow:0 3px 11px rgba(0,0,0,.1); }
+.fam-name { font-size:var(--t-md);font-weight:700;line-height:1.1; }
+.fam-role { font-size:var(--t-sm);color:var(--muted);margin-top:3px;font-weight:600; }
+.fam-tap  { font-size:var(--t-xs);color:var(--blue);margin-top:5px;font-style:italic; }
+
+/* Modal */
+.modal-bg  { display:none;position:fixed;inset:0;background:rgba(20,10,0,.55);z-index:300;align-items:center;justify-content:center;padding:14px; }
+.modal-bg.open { display:flex;animation:fadeIn .22s ease; }
+.modal-box { background:var(--surface);border-radius:26px;padding:28px 22px;text-align:center;max-width:340px;width:100%;box-shadow:0 20px 54px rgba(0,0,0,.25);animation:fadeUp .28s ease;max-height:90vh;overflow-y:auto; }
+.m-av { font-size:76px;margin-bottom:11px; }
+.m-nm { font-size:var(--t-xl);font-weight:700; }
+.m-rl { font-size:var(--t-md);color:var(--warm1);margin:5px 0 13px;font-weight:700; }
+.m-ds { font-size:var(--t-sm);color:#555;line-height:1.6;margin-bottom:20px; }
+.modal-close { width:100%;padding:16px;border:none;background:var(--warm1);color:#fff;border-radius:15px;font-size:var(--t-md);font-family:var(--ff);font-weight:700;cursor:pointer;box-shadow:0 3px 13px rgba(232,147,106,.33); }
+
+/* ═══ SOS ═══════════════════════════════════════════ */
+#sos { flex-direction:column;align-items:center;justify-content:flex-start;min-height:100vh;padding:0 16px 88px;text-align:center; }
+.sos-heading { font-size:var(--t-xl);font-weight:700;color:var(--red);margin:12px 0 5px; }
+.sos-sub     { font-size:var(--t-sm);color:var(--muted);margin-bottom:18px; }
+.sos-big-btn { width:min(250px,70vw);height:min(250px,70vw);border-radius:50%;border:none;background:radial-gradient(circle at 35% 35%,#FF6060,#B82020);color:#fff;font-size:var(--t-lg);font-family:var(--ff);font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:transform .1s;line-height:1.2;animation:sosGlow 2.5s ease-in-out infinite;flex-shrink:0; }
+.sos-big-btn:active { transform:scale(.93); }
+.sos-big-icon { font-size:50px; }
+@media (orientation:landscape) and (max-height:500px) {
+  .sos-big-btn  { width:min(140px,38vw);height:min(140px,38vw); }
+  .sos-big-icon { font-size:32px; }
+  .sos-heading  { font-size:var(--t-lg);margin:6px 0 3px; }
+  #sos { flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:14px;padding-top:8px; }
+  .sos-contacts,.sos-confirmed { max-width:320px; }
+}
+.sos-confirmed { display:none;margin-top:18px;width:100%;max-width:340px;background:linear-gradient(135deg,#EAFAF2,#D4F4E4);border:2px solid var(--green);border-radius:var(--radius);padding:20px; }
+.sos-confirmed.show { display:block;animation:fadeUp .35s ease; }
+.sc-icon  { font-size:42px; }
+.sc-title { font-size:var(--t-md);font-weight:700;color:var(--green);margin:5px 0; }
+.sc-text  { font-size:var(--t-sm);color:#444;line-height:1.6; }
+.sos-contacts { margin-top:18px;width:100%;max-width:340px;text-align:left; }
+.sc-section-title { font-size:var(--t-sm);font-weight:700;color:var(--muted);padding:0 0 8px;text-transform:uppercase;letter-spacing:.5px; }
+.sos-contact { background:var(--surface);border:none;border-radius:17px;padding:15px 16px;margin-bottom:9px;width:100%;box-shadow:0 2px 11px var(--shadow);cursor:pointer;display:flex;align-items:center;gap:11px;transition:transform .15s; }
+.sos-contact:active { transform:scale(.97); }
+.sc-av    { font-size:28px;flex-shrink:0; }
+.sc-inf   { flex:1; }
+.sc-name  { font-size:var(--t-sm);font-weight:700; }
+.sc-phone { font-size:var(--t-xs);color:var(--muted); }
+.sc-call  { font-size:24px;margin-left:auto; }
+
+/* ═══ EXERCÍCIOS ════════════════════════════════════ */
+.cog-grid { display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:6px 14px; }
+.cog-card { border:none;border-radius:var(--radius);min-height:125px;padding:20px 11px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 17px var(--shadow);font-family:var(--ff);font-size:var(--t-sm);font-weight:700;color:#fff;text-align:center;transition:transform .15s; }
+.cog-card:active { transform:scale(.94); }
+.cog-icon { font-size:40px; }
+.cc1{background:linear-gradient(145deg,#F2B880,#D09050);}
+.cc2{background:linear-gradient(145deg,#7AAFC9,#4A8AB0);}
+.cc3{background:linear-gradient(145deg,#6BAE8E,#3A8A6A);grid-column:span 2;min-height:95px;}
+@media (orientation:landscape) and (min-width:600px) {
+  .cog-grid { grid-template-columns:repeat(3,1fr); }
+  .cc3 { grid-column:span 1; }
+}
+.cog-info { background:linear-gradient(135deg,#FFF8EE,#FFF0DC);border:2px solid var(--border);border-radius:var(--radius);margin:10px 14px;padding:14px 16px; }
+.cog-info-title { font-size:var(--t-sm);font-weight:700;color:var(--warm1);margin-bottom:4px; }
+.cog-info-text  { font-size:var(--t-xs);color:var(--muted);line-height:1.7; }
+
+/* Memória */
+.mem-score-row { display:flex;justify-content:space-between;align-items:center;padding:8px 18px;font-size:var(--t-sm);font-weight:700;color:var(--warm1); }
+.mem-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:9px;padding:0 14px; }
+.mem-tile { aspect-ratio:1;border-radius:13px;border:none;cursor:pointer;font-size:28px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#7AAFC9,#4A8AB0);box-shadow:0 3px 11px var(--shadow);transition:transform .2s;color:transparent;user-select:none; }
+.mem-tile.flipped,.mem-tile.matched { background:var(--surface);color:var(--text);border:2.5px solid var(--border); }
+.mem-tile.matched { border-color:var(--green);background:#F0FFF8; }
+.mem-tile:active  { transform:scale(.9); }
+.mem-result { text-align:center;padding:15px;font-size:var(--t-lg);font-weight:700;color:var(--green);display:none; }
+
+/* Objetos */
+.obj-q-box { background:var(--surface);border-radius:var(--radius);margin:8px 14px;padding:22px 16px;text-align:center;box-shadow:0 3px 15px var(--shadow); }
+.obj-big   { font-size:82px;line-height:1;margin-bottom:5px; }
+.obj-ask   { font-size:var(--t-md);font-weight:700;color:var(--muted); }
+.obj-opts  { display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 14px 6px; }
+.obj-opt   { border:3px solid transparent;border-radius:17px;background:var(--surface);box-shadow:0 2px 9px var(--shadow);padding:16px 10px;font-size:var(--t-sm);font-family:var(--ff);font-weight:700;cursor:pointer;transition:all .2s;color:var(--text); }
+.obj-opt:active { transform:scale(.95); }
+.obj-opt.correct { border-color:var(--green);background:#F0FFF8;color:var(--green); }
+.obj-opt.wrong   { border-color:var(--red);background:#FFF0F0;color:var(--red); }
+.obj-fb  { text-align:center;font-size:var(--t-md);font-weight:700;min-height:46px;padding:8px; }
+.game-pts{ text-align:center;font-size:var(--t-sm);color:var(--muted);padding:3px 0 9px; }
+
+/* Palavras */
+.word-box     { background:var(--surface);border-radius:var(--radius);margin:8px 14px;padding:24px 14px;text-align:center;box-shadow:0 3px 15px var(--shadow); }
+.word-display { font-size:var(--t-xl);font-weight:700;letter-spacing:11px;color:var(--warm1);margin-bottom:5px; }
+.word-hint    { font-size:var(--t-sm);color:var(--muted);margin-bottom:16px; }
+.letter-row   { display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:0 5px; }
+.let-btn      { width:56px;height:56px;border-radius:13px;border:2.5px solid var(--border);background:var(--surface);font-size:var(--t-md);font-weight:700;font-family:var(--ff);cursor:pointer;transition:all .15s;color:var(--text);box-shadow:0 2px 7px var(--shadow); }
+.let-btn:active   { transform:scale(.86);background:var(--warm1);color:#fff;border-color:var(--warm1); }
+.let-btn:disabled { opacity:.27;cursor:default; }
+.word-res { text-align:center;font-size:var(--t-md);font-weight:700;min-height:46px;padding:8px; }
+
+/* Botão genérico */
+.btn-action { border:none;border-radius:15px;padding:15px 22px;font-size:var(--t-sm);font-family:var(--ff);font-weight:700;cursor:pointer;transition:transform .15s;box-shadow:0 3px 11px var(--shadow);color:#fff;display:inline-flex;align-items:center;gap:7px; }
+.btn-action:active { transform:scale(.95); }
+.btn-primary{ background:linear-gradient(145deg,var(--warm1),#C06040); }
+
+.sec-label { font-size:var(--t-xs);font-weight:700;color:var(--muted);padding:13px 18px 6px;text-transform:uppercase;letter-spacing:.8px; }
+.game-reset-row { text-align:center;padding:9px 0 0; }
+
+/* ═══ NAV INFERIOR ══════════════════════════════════ */
+.bottom-nav { position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:2px solid var(--border);display:flex;padding:6px 4px 11px;gap:2px;z-index:190;box-shadow:0 -3px 16px var(--shadow); }
+.nb { flex:1;border:none;background:none;cursor:pointer;padding:6px 2px;border-radius:11px;display:flex;flex-direction:column;align-items:center;gap:3px;transition:background .18s;font-size:10px;font-family:var(--ff);color:var(--muted);font-weight:700;min-width:0; }
+.nb.on { background:#FFF0E4;color:var(--warm1); }
+.nb-ic { font-size:23px; }
+@media (orientation:landscape) and (max-height:500px) {
+  .bottom-nav { padding:3px 4px 5px; }
+  .nb { font-size:9px;padding:4px 2px; }
+  .nb-ic { font-size:18px; }
+}
+
+/* Toast */
+#toast { position:fixed;bottom:86px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--text);color:#fff;border-radius:50px;padding:11px 22px;font-size:var(--t-sm);font-weight:700;opacity:0;transition:all .28s;z-index:400;white-space:nowrap;pointer-events:none;box-shadow:0 4px 18px rgba(0,0,0,.22);max-width:88vw;text-align:center; }
+#toast.show { opacity:1;transform:translateX(-50%) translateY(0); }
+
+/* Tablet */
+@media (min-width:768px) {
+  .main-grid { max-width:580px;margin:0 auto;padding:0 18px; }
+  .family-grid { max-width:580px;margin:0 auto;grid-template-columns:repeat(3,1fr); }
+  .med-list,.period-block,.cog-grid,.obj-opts,.sos-contacts,.sos-confirmed { max-width:580px;margin-left:auto;margin-right:auto; }
+}
+
+/* ═══ LANDSCAPE COMPLETO ══════════════════════════════
+   Tudo visível sem scroll em telefone deitado (≤500px altura)
+══════════════════════════════════════════════════ */
+@media (orientation:landscape) and (max-height:500px) {
+
+  /* Home — layout horizontal compacto */
+  #home { padding-bottom:52px; }
+  .home-greeting { padding:4px 12px 2px; display:flex; align-items:center; gap:10px; justify-content:center; }
+  .home-greeting .waving { font-size:24px; }
+  .hello-name { font-size:var(--t-md); margin:0; }
+  .hello-sub  { display:none; }
+  .location-chip { margin:4px auto 6px; padding:4px 12px; font-size:var(--t-xs); }
+
+  /* Grid 4 colunas compactas */
+  .main-grid { grid-template-columns:repeat(4,1fr); gap:7px; padding:0 10px; }
+  .m-btn { min-height:76px; padding:10px 8px; gap:5px; }
+  .m-btn .m-icon  { font-size:26px; }
+  .m-btn .m-label { font-size:13px; }
+
+  /* SOS compacto */
+  .sos-home-btn { padding:10px 16px; margin-top:6px; font-size:var(--t-sm); }
+
+  /* Música — linha única horizontal */
+  .music-section { margin:6px 10px 0; padding:10px 10px; }
+  .music-title   { display:none; }
+  .music-grid    { gap:6px; }
+  .music-btn     { padding:8px 6px; font-size:12px; flex-direction:row; gap:4px; }
+  .music-note    { font-size:16px; }
+
+  /* Modo idoso compacto */
+  .elder-wrap { margin:6px 10px 0; }
+  .elder-btn  { padding:6px 16px; font-size:12px; }
+
+  /* Nav menor */
+  .bottom-nav { padding:2px 2px 4px; }
+  .nb { font-size:9px; padding:3px 2px; }
+  .nb-ic { font-size:16px; }
+  #home { padding-bottom:46px; }
+  .screen { padding-bottom:46px; }
+
+  /* s-header em landscape (sem topbar) */
+  .s-header { top:0; padding:8px 12px 6px; }
+
+  /* Rotina landscape — 2 colunas de períodos */
+  .period-header { padding:6px 10px 4px; font-size:var(--t-sm); }
+  .period-ico    { font-size:20px; }
+  .task-row      { padding:10px 44px 10px 12px; margin-bottom:6px; }
+  .task-chk      { width:30px; height:30px; font-size:14px; }
+  .task-text     { font-size:var(--t-xs); }
+  .task-emoji    { font-size:18px; }
+  .period-block  { margin:4px 10px 0; }
+  .add-task-form { padding:8px 10px; margin:4px 0; }
+  .add-task-input{ padding:7px 9px; font-size:var(--t-xs); }
+
+  /* Remédios landscape */
+  .med-card     { padding:12px 12px; }
+  .med-card .m-name { font-size:var(--t-sm); }
+  .med-card .m-time { font-size:var(--t-xs); }
+  .btn-took     { padding:8px 10px; font-size:var(--t-xs); }
+
+  /* Família landscape — 4 colunas */
+  .family-grid  { grid-template-columns:repeat(4,1fr); gap:8px; padding:4px 10px; }
+  .fam-avatar   { width:56px; height:56px; font-size:30px; margin-bottom:6px; }
+  .fam-name     { font-size:var(--t-sm); }
+  .fam-role     { font-size:var(--t-xs); }
+  .fam-tap      { font-size:11px; }
+
+  /* Exercícios landscape — 3 colunas */
+  .cog-grid  { grid-template-columns:repeat(3,1fr); gap:8px; padding:4px 10px; }
+  .cog-card  { min-height:80px; padding:14px 8px; gap:5px; }
+  .cog-icon  { font-size:28px; }
+  .cc3 { grid-column:span 1; }
+  .cog-info  { margin:6px 10px; padding:10px 12px; }
+
+  /* Memória landscape — 4 cols mas tiles menores */
+  .mem-grid  { gap:7px; padding:0 10px; }
+  .mem-score-row { padding:5px 14px; }
+
+  /* Objetos landscape */
+  .obj-q-box { padding:14px 12px; margin:5px 10px; }
+  .obj-big   { font-size:56px; }
+  .obj-opts  { padding:0 10px 4px; gap:7px; }
+  .obj-opt   { padding:11px 8px; font-size:var(--t-xs); }
+
+  /* Palavras landscape */
+  .word-box     { padding:16px 12px; margin:5px 10px; }
+  .word-display { font-size:var(--t-lg); letter-spacing:8px; }
+  .let-btn      { width:46px; height:46px; font-size:var(--t-sm); }
+
+  /* SOS landscape */
+  #sos { flex-direction:row; flex-wrap:wrap; justify-content:center;
+         align-items:flex-start; gap:10px; padding:0 12px 46px; }
+  #sos .s-header { flex:0 0 100%; }
+  .sos-heading { font-size:var(--t-lg); margin:6px 0 3px; flex:0 0 100%; }
+  .sos-sub     { display:none; }
+  .sos-big-btn { width:min(120px,30vw); height:min(120px,30vw); font-size:var(--t-sm); }
+  .sos-big-icon{ font-size:28px; }
+  .sos-contacts{ margin-top:0; max-width:280px; }
+  .sos-contact { padding:10px 12px; margin-bottom:7px; }
+  .sc-name     { font-size:var(--t-xs); }
+  .sc-phone    { font-size:12px; }
+  .sc-av       { font-size:22px; }
+}
+
+/* Telas muito pequenas */
+@media (max-width:330px) {
+  :root { --t-xs:14px;--t-sm:17px;--t-md:21px;--t-lg:27px;--t-xl:34px; }
+  .main-grid { gap:8px;padding:0 9px; }
+  .m-btn { min-height:115px; }
+}
+
+/* Tablet portrait */
+@media (min-width:600px) and (orientation:portrait) {
+  .main-grid   { grid-template-columns:repeat(4,1fr); gap:12px; max-width:640px; margin:0 auto; padding:0 16px; }
+  .m-btn       { min-height:120px; }
+  .family-grid { grid-template-columns:repeat(3,1fr); max-width:640px; margin:0 auto; }
+  .cog-grid    { grid-template-columns:repeat(3,1fr); }
+  .cc3         { grid-column:span 1; }
+}
+</style>
+</head>
+<body>
+
+<div id="orient-bar">
+  <div id="orient-day">📅 Carregando...</div>
+  <div id="orient-extra">🏠 Você está em casa com a Nide 💛</div>
+  <div id="orient-time">⏰ --:--</div>
+</div>
+
+<!-- HOME -->
+<div id="home" class="screen active">
+  <div class="home-greeting">
+    <span class="waving">👋</span>
+    <div class="hello-name">Olá, Wlamir!</div>
+    <div class="hello-sub">Que bom ter você aqui.</div>
+  </div>
+  <div class="location-chip">🏡 Você está em casa · A Nide está com você</div>
+  <div class="main-grid">
+    <button class="m-btn btn-remedios" onclick="goTo('remedios')">
+      <span class="m-icon">💊</span><span class="m-label">REMÉDIOS</span>
+      <span class="m-badge" id="med-badge">0</span>
+    </button>
+    <button class="m-btn btn-rotina" onclick="goTo('rotina')">
+      <span class="m-icon">📅</span><span class="m-label">ROTINA DO DIA</span>
+    </button>
+    <button class="m-btn btn-familia" onclick="goTo('familia')">
+      <span class="m-icon">👨‍👩‍👧</span><span class="m-label">MINHA FAMÍLIA</span>
+    </button>
+    <button class="m-btn btn-cognitivo" onclick="goTo('cognitivo')">
+      <span class="m-icon">🧠</span><span class="m-label">EXERCÍCIOS</span>
+    </button>
+  </div>
+  <button class="sos-home-btn" onclick="goTo('sos')">🚨 PEDIR AJUDA 🚨</button>
+  <div class="music-section">
+    <div class="music-title">🎵 Música para relaxar</div>
+    <div class="music-grid">
+      <button class="music-btn mb1" onclick="playMusic(0,this)"><span class="music-note">🎵</span>Relaxar</button>
+      <button class="music-btn mb2" onclick="playMusic(1,this)"><span class="music-note">🎶</span>Lembrar</button>
+      <button class="music-btn mb3" onclick="playMusic(2,this)"><span class="music-note">🎼</span>Descansar</button>
+    </div>
+    <div id="music-now"></div>
+  </div>
+  <div class="elder-wrap">
+    <button class="elder-btn" id="elder-btn" onclick="toggleElder()">🔡 Letras Maiores</button>
+  </div>
+</div>
+
+<!-- REMÉDIOS -->
+<div id="remedios" class="screen">
+  <div class="s-header"><button class="back-btn" onclick="goBack()">←</button><span class="s-title">💊 Remédios</span></div>
+  <div id="med-alert" class="alert-banner" style="display:none"><span class="a-icon">⚠️</span><span class="a-text">Há remédio para tomar agora!</span></div>
+  <div class="prog-wrap"><div class="prog-bar-bg"><div class="prog-bar-fill" id="med-prog" style="width:0%"></div></div><div class="prog-label" id="med-prog-lbl">0 de 0 tomados</div></div>
+  <div class="sec-label">Remédios de hoje:</div>
+  <div class="med-list" id="med-list"></div>
+  <div class="nide-toggle-wrap">
+    <button class="nide-toggle-btn" id="nide-med-toggle" onclick="toggleNidePanel('nide-med-panel',this)">🔒 Modo Cuidadora (Nide) — adicionar / remover</button>
+  </div>
+  <div id="nide-med-panel" style="display:none">
+    <div class="nide-panel">
+      <div class="nide-panel-title">➕ Adicionar remédio</div>
+      <div class="nide-form">
+        <input class="nide-input" id="med-nome"    placeholder="Nome do remédio (ex: Donepezila)"/>
+        <input class="nide-input" id="med-horario" placeholder="Horário (ex: 08:00)"/>
+        <input class="nide-input" id="med-dose"    placeholder="Dose (ex: 10mg — 1 comprimido)"/>
+        <button class="btn-add-med" onclick="addMed()">➕ Adicionar remédio</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROTINA -->
+<div id="rotina" class="screen">
+  <div class="s-header"><button class="back-btn" onclick="goBack()">←</button><span class="s-title">📅 Rotina do Dia</span></div>
+  <div id="routine-container"></div>
+</div>
+
+<!-- FAMÍLIA -->
+<div id="familia" class="screen">
+  <div class="s-header"><button class="back-btn" onclick="goBack()">←</button><span class="s-title">👨‍👩‍👧 Minha Família</span></div>
+  <div class="sec-label">Pessoas que te amam:</div>
+  <div class="family-grid" id="family-grid"></div>
+</div>
+<div class="modal-bg" id="fam-modal" onclick="closeFamModal(event)">
+  <div class="modal-box"><div class="m-av" id="m-av"></div><div class="m-nm" id="m-nm"></div><div class="m-rl" id="m-rl"></div><div class="m-ds" id="m-ds"></div><button class="modal-close" onclick="closeFamModal()">✓ Entendi, obrigado!</button></div>
+</div>
+
+<!-- SOS -->
+<div id="sos" class="screen">
+  <div class="s-header" style="align-self:flex-start;width:100%"><button class="back-btn" onclick="goBack()">←</button><span class="s-title" style="color:var(--red)">🚨 Pedir Ajuda</span></div>
+  <div class="sos-heading">Precisa de ajuda?</div>
+  <div class="sos-sub">Aperte o botão grande</div>
+  <button class="sos-big-btn" onclick="triggerSOS()"><span class="sos-big-icon">🆘</span>PEDIR<br>AJUDA</button>
+  <div class="sos-confirmed" id="sos-confirmed">
+    <div class="sc-icon">✅</div><div class="sc-title">Pedido enviado!</div>
+    <div class="sc-text">Sua família foi avisada.<br>Alguém vai chegar em breve.<br><br><strong>Você está em casa. Está seguro. 💛</strong></div>
+  </div>
+  <div class="sos-contacts">
+    <div class="sc-section-title">Ligar para:</div>
+    <button class="sos-contact" onclick="callSim('Yan','71 99278-4660')"><span class="sc-av">👦</span><span class="sc-inf"><div class="sc-name">Yan</div><div class="sc-phone">📞 71 99278-4660</div></span><span class="sc-call">📞</span></button>
+    <button class="sos-contact" onclick="callSim('Yan e Paloma','71 8722-0342')"><span class="sc-av">👫</span><span class="sc-inf"><div class="sc-name">Yan e Paloma</div><div class="sc-phone">📞 71 8722-0342</div></span><span class="sc-call">📞</span></button>
+    <button class="sos-contact" onclick="callSim('Eliane','71 99284-2562')"><span class="sc-av">👩</span><span class="sc-inf"><div class="sc-name">Eliane</div><div class="sc-phone">📞 71 99284-2562</div></span><span class="sc-call">📞</span></button>
+    <button class="sos-contact" onclick="callSim('Sueli','71 92947-173')"><span class="sc-av">👩‍🦳</span><span class="sc-inf"><div class="sc-name">Sueli</div><div class="sc-phone">📞 71 92947-173</div></span><span class="sc-call">📞</span></button>
+  </div>
+</div>
+
+<!-- EXERCÍCIOS MENU -->
+<div id="cognitivo" class="screen">
+  <div class="s-header"><button class="back-btn" onclick="goBack()">←</button><span class="s-title">🧠 Exercícios</span></div>
+  <div class="sec-label">Escolha uma atividade:</div>
+  <div class="cog-grid">
+    <button class="cog-card cc1" onclick="goTo('game-memory')"><span class="cog-icon">🃏</span>Jogo da<br>Memória</button>
+    <button class="cog-card cc2" onclick="startObjects()"><span class="cog-icon">🔎</span>Identificar<br>Objetos</button>
+    <button class="cog-card cc3" onclick="startWords()"><span class="cog-icon">🔤</span>Completar Palavras</button>
+  </div>
+  <div class="cog-info"><div class="cog-info-title">💡 Por que exercitar o cérebro?</div><div class="cog-info-text">Exercícios mentais diários ajudam a manter a mente ativa e melhoram a memória. Tente uma atividade por dia! 🌟</div></div>
+</div>
+
+<!-- JOGO DA MEMÓRIA -->
+<div id="game-memory" class="screen">
+  <div class="s-header"><button class="back-btn" onclick="goTo('cognitivo')">←</button><span class="s-title">🃏 Memória</span></div>
+  <div class="mem-score-row"><span id="mem-score">Pares: 0 / 6</span><span id="mem-moves">Tentativas: 0</span></div>
+  <div class="mem-grid" id="mem-grid"></div>
+  <div class="mem-result" id="mem-result">🎉 Parabéns, Wlamir!</div>
+  <div class="game-reset-row"><button class="btn-action btn-primary" onclick="initMemory()">🔄 Novo Jogo</button></div>
+</div>
+
+<!-- IDENTIFICAR OBJETOS -->
+<div id="game-objects" class="screen">
+  <div class="s-header"><button class="back-btn" onclick="goTo('cognitivo')">←</button><span class="s-title">🔎 Objetos</span></div>
+  <div class="obj-q-box"><div class="obj-big" id="obj-emoji">🍎</div><div class="obj-ask">O que é isso?</div></div>
+  <div class="obj-opts" id="obj-opts"></div>
+  <div class="obj-fb" id="obj-fb"></div>
+  <div class="game-pts" id="obj-pts">Pontos: 0</div>
+</div>
+
+<!-- COMPLETAR PALAVRAS -->
+<div id="game-words" class="screen">
+  <div class="s-header"><button class="back-btn" onclick="goTo('cognitivo')">←</button><span class="s-title">🔤 Palavras</span></div>
+  <div class="word-box"><div class="word-display" id="word-disp"></div><div class="word-hint" id="word-hint"></div><div class="letter-row" id="word-letters"></div></div>
+  <div class="word-res" id="word-res"></div>
+  <div class="game-pts" id="word-pts">Pontos: 0</div>
+</div>
+
+<!-- NAV -->
+<nav class="bottom-nav" id="bnav">
+  <button class="nb on" id="nb-home"      onclick="goTo('home')">      <span class="nb-ic">🏠</span>Início</button>
+  <button class="nb"    id="nb-remedios"  onclick="goTo('remedios')">  <span class="nb-ic">💊</span>Remédios</button>
+  <button class="nb"    id="nb-rotina"    onclick="goTo('rotina')">    <span class="nb-ic">📅</span>Rotina</button>
+  <button class="nb"    id="nb-cognitivo" onclick="goTo('cognitivo')"> <span class="nb-ic">🧠</span>Exercícios</button>
+  <button class="nb"    id="nb-sos" onclick="goTo('sos')" style="color:var(--red)"><span class="nb-ic">🚨</span>Ajuda</button>
+</nav>
+<div id="toast"></div>
+
+<script>
+'use strict';
+const S={screen:'home',elder:false,medsTaken:new Set(),memCards:[],memFlipped:[],memMatches:0,memMoves:0,memLocked:false,objScore:0,objIdx:0,wScore:0,wIdx:0,wCurrent:null,audioCtx:null,musicTimeout:null,currentTrack:-1};
+
+/* Persistência */
+function loadMeds(){try{const d=localStorage.getItem('wlamir_meds_v2');if(d)return JSON.parse(d);}catch(e){}return[{id:1,name:'Donepezila',dose:'10 mg — 1 comprimido',time:'08:00',icon:'💊',dueNow:true},{id:2,name:'Memantina',dose:'5 mg — 1 comprimido',time:'08:00',icon:'💊',dueNow:true},{id:3,name:'Losartana',dose:'50 mg — 1 comprimido',time:'12:00',icon:'🔵',dueNow:false},{id:4,name:'Vitamina D',dose:'2000 UI — 1 cápsula',time:'20:00',icon:'🟡',dueNow:false}];}
+function saveMeds(){try{localStorage.setItem('wlamir_meds_v2',JSON.stringify(MEDS));}catch(e){}}
+function loadTasks(){try{const d=localStorage.getItem('wlamir_tasks_v2');if(d)return JSON.parse(d);}catch(e){}return{manha:[{id:'m0',text:'Acordar e tomar café',emoji:'☕',done:false},{id:'m1',text:'Tomar os remédios',emoji:'💊',done:false},{id:'m2',text:'Higiene pessoal',emoji:'🚿',done:false},{id:'m3',text:'Caminhada leve',emoji:'🚶',done:false}],tarde:[{id:'t0',text:'Almoço',emoji:'🍽️',done:false},{id:'t1',text:'Descanso 30 min',emoji:'😴',done:false},{id:'t2',text:'Exercício de memória',emoji:'🧠',done:false},{id:'t3',text:'Leitura ou passeio',emoji:'📖',done:false}],noite:[{id:'n0',text:'Jantar',emoji:'🍲',done:false},{id:'n1',text:'Remédio da noite',emoji:'💊',done:false},{id:'n2',text:'TV ou conversa',emoji:'📺',done:false},{id:'n3',text:'Dormir cedo',emoji:'🛏️',done:false}]};}
+function saveTasks(){try{localStorage.setItem('wlamir_tasks_v2',JSON.stringify(TASKS));}catch(e){}}
+let MEDS=loadMeds(),TASKS=loadTasks();
+
+const FAMILY=[
+  {av:'👩‍🦳',name:'Nide',role:'Esposa',desc:'Nide é sua esposa e sua companheira de vida. Ela cuida de você com muito amor todos os dias. Ela está sempre ao seu lado. 💛'},
+  {av:'👦',name:'Yan',role:'Sobrinho',desc:'Yan é seu sobrinho e te ama muito. Ele sempre liga para saber como você está e quer o seu bem. 💙'},
+  {av:'👩',name:'Paloma',role:'Sobrinha',desc:'Paloma é sobrinha e está sempre pensando em você. Um coração enorme cheio de carinho. 💗'},
+  {av:'👩‍🦱',name:'Eliane',role:'Familiar',desc:'Eliane é da família e se preocupa muito com você. Pode ligar para ela quando precisar! 🌸'},
+  {av:'👩‍🦳',name:'Sueli',role:'Familiar',desc:'Sueli faz parte da família e torce por você todos os dias. 🌻'},
+  {av:'👨‍⚕️',name:'Médico',role:'Saúde',desc:'Seu médico cuida da sua saúde. Se sentir qualquer coisa diferente, fale com a Nide para ligar para ele. 🏥'},
+];
+const OBJ_Q=[{emoji:'🍎',answer:'Maçã',options:['Maçã','Bola','Chapéu','Livro']},{emoji:'🚗',answer:'Carro',options:['Barco','Carro','Avião','Trem']},{emoji:'🌹',answer:'Rosa',options:['Tulipa','Girassol','Rosa','Margarida']},{emoji:'🐕',answer:'Cachorro',options:['Gato','Pássaro','Cachorro','Peixe']},{emoji:'📚',answer:'Livro',options:['Caderno','Livro','Revista','Jornal']},{emoji:'🌞',answer:'Sol',options:['Lua','Nuvem','Sol','Estrela']},{emoji:'🏠',answer:'Casa',options:['Escola','Igreja','Casa','Hospital']},{emoji:'🎂',answer:'Bolo',options:['Pão','Bolo','Torta','Biscoito']},{emoji:'🌊',answer:'Mar',options:['Rio','Lago','Chuva','Mar']},{emoji:'🦋',answer:'Borboleta',options:['Abelha','Besouro','Borboleta','Mosca']}];
+const WORDS=[{word:'AMOR',hidden:[1,3],hint:'O que sentimos pela família ❤️'},{word:'CASA',hidden:[0,2],hint:'Onde você mora 🏠'},{word:'AGUA',hidden:[1,3],hint:'Bebemos quando temos sede 💧'},{word:'FELIZ',hidden:[2,4],hint:'Como você se sente bem 😊'},{word:'SOL',hidden:[1],hint:'Brilha no céu de dia ☀️'},{word:'FLOR',hidden:[0,3],hint:'Bonita e com cheiro bom 🌸'},{word:'CAFE',hidden:[0,2],hint:'Bebida quente da manhã ☕'},{word:'PEIXE',hidden:[2,4],hint:'Animal do mar 🐟'},{word:'NIDE',hidden:[0,2],hint:'O nome da sua esposa 💛'},{word:'PAZ',hidden:[1],hint:'O que sentimos quando estamos bem 🕊️'}];
+
+/* Orientação */
+function updateOrientation(){const D=['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'],M=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'],n=new Date();document.getElementById('orient-day').textContent=`📅 ${D[n.getDay()]}, ${n.getDate()} de ${M[n.getMonth()]} de ${n.getFullYear()}`;const h=String(n.getHours()).padStart(2,'0'),m=String(n.getMinutes()).padStart(2,'0');document.getElementById('orient-time').textContent=`⏰ ${h}:${m}`;}
+
+/* Navegação */
+function goTo(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));const el=document.getElementById(id);if(!el)return;el.classList.add('active');S.screen=id;document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));const nb=document.getElementById('nb-'+id);if(nb)nb.classList.add('on');document.getElementById('bnav').style.display=id==='sos'?'none':'flex';if(id==='game-memory')initMemory();if(id==='game-objects')renderObjQ();if(id==='game-words')renderWordQ();if(id==='remedios')renderMeds();if(id==='rotina')renderRoutine();if(id==='familia')renderFamily();window.scrollTo(0,0);}
+function goBack(){const map={remedios:'home',rotina:'home',familia:'home',sos:'home',cognitivo:'home','game-memory':'cognitivo','game-objects':'cognitivo','game-words':'cognitivo'};goTo(map[S.screen]||'home');}
+
+/* Modo Idoso */
+function toggleElder(){S.elder=!S.elder;document.body.classList.toggle('elder',S.elder);const b=document.getElementById('elder-btn');b.classList.toggle('on',S.elder);b.textContent=S.elder?'🔡 Modo Normal':'🔡 Letras Maiores';showToast(S.elder?'🔡 Letras maiores ativadas!':'Modo normal ativado');}
+
+/* Painel Nide */
+function toggleNidePanel(panelId,btn){const panel=document.getElementById(panelId),open=panel.style.display==='none'||!panel.style.display;panel.style.display=open?'block':'none';btn.classList.toggle('on',open);btn.textContent=open?'🔓 Modo Cuidadora (ativo) — toque para fechar':'🔒 Modo Cuidadora (Nide) — adicionar / remover';}
+
+/* Toast */
+let _tt;function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2400);}
+
+/* ═══ REMÉDIOS ══════════════════════════════════════ */
+function renderMeds(){
+  const list=document.getElementById('med-list');list.innerHTML='';let due=0;
+  MEDS.forEach(med=>{
+    const taken=S.medsTaken.has(med.id);if(med.dueNow&&!taken)due++;
+    const card=document.createElement('div');card.className=`med-card ${taken?'taken':(med.dueNow?'due':'')}`;card.id=`mc-${med.id}`;
+    const btnTook=document.createElement('button');btnTook.className='btn-took';btnTook.textContent=taken?'✅ Tomado':'✔ Tomei';if(taken)btnTook.disabled=true;btnTook.onclick=()=>takeMed(med.id);
+    const btnDel=document.createElement('button');btnDel.className='med-del-btn';btnDel.title='Remover';btnDel.textContent='🗑';btnDel.onclick=()=>deleteMed(med.id);
+    const actions=document.createElement('div');actions.className='med-actions';actions.appendChild(btnDel);
+    card.innerHTML=`<span class="m-ico">${med.icon}</span><div class="m-info"><div class="m-name">${med.name}</div><div class="m-time">⏰ ${med.time}</div><div class="m-dose">${med.dose}</div></div>`;
+    card.appendChild(btnTook);card.appendChild(actions);list.appendChild(card);
+  });
+  document.getElementById('med-alert').style.display=due>0?'flex':'none';
+  const pending=MEDS.filter(m=>!S.medsTaken.has(m.id)).length,badge=document.getElementById('med-badge');badge.textContent=pending;badge.classList.toggle('show',pending>0);
+  const taken=S.medsTaken.size,total=MEDS.length||1,pct=Math.round(taken/total*100);document.getElementById('med-prog').style.width=pct+'%';document.getElementById('med-prog-lbl').textContent=`${taken} de ${MEDS.length} tomados`;
+}
+function takeMed(id){S.medsTaken.add(id);renderMeds();showToast('✅ Remédio marcado! 🎉');const c=document.getElementById(`mc-${id}`);if(c){c.style.animation='bounce .4s';setTimeout(()=>c.style.animation='',450);}}
+function addMed(){const nome=document.getElementById('med-nome').value.trim(),horario=document.getElementById('med-horario').value.trim(),dose=document.getElementById('med-dose').value.trim();if(!nome||!horario){showToast('⚠️ Preencha o nome e o horário');return;}MEDS.push({id:Date.now(),name:nome,dose:dose||'—',time:horario,icon:'💊',dueNow:false});saveMeds();document.getElementById('med-nome').value='';document.getElementById('med-horario').value='';document.getElementById('med-dose').value='';renderMeds();showToast('💊 Remédio adicionado!');}
+function deleteMed(id){if(!confirm('Remover este remédio?'))return;MEDS=MEDS.filter(m=>m.id!==id);S.medsTaken.delete(id);saveMeds();renderMeds();showToast('🗑 Remédio removido');}
+
+/* ═══ ROTINA — BUG CORRIGIDO ════════════════════════
+   buildTaskRow usa addEventListener com stopPropagation
+   no botão delete, sem conflito com o toggle do row.
+══════════════════════════════════════════════════ */
+function renderRoutine(){
+  const c=document.getElementById('routine-container');c.innerHTML='';
+  [{key:'manha',label:'MANHÃ',icon:'☀️',color:'#C07828'},{key:'tarde',label:'TARDE',icon:'🌤',color:'#4A88B0'},{key:'noite',label:'NOITE',icon:'🌙',color:'#7A52AA'}].forEach(p=>{
+    const block=document.createElement('div');block.className='period-block';
+    const hdr=document.createElement('div');hdr.className='period-header';hdr.style.color=p.color;hdr.innerHTML=`<span class="period-ico">${p.icon}</span><span>${p.label}</span>`;block.appendChild(hdr);
+    TASKS[p.key].forEach((task,idx)=>block.appendChild(buildTaskRow(p.key,idx,task)));
+    const form=document.createElement('div');form.className='add-task-form';
+    const inp=document.createElement('input');inp.className='add-task-input';inp.placeholder='Adicionar tarefa...';inp.id=`at-${p.key}`;inp.addEventListener('keydown',e=>{if(e.key==='Enter')addTask(p.key);});
+    const ab=document.createElement('button');ab.className='add-task-btn';ab.textContent='➕';ab.onclick=()=>addTask(p.key);
+    form.appendChild(inp);form.appendChild(ab);block.appendChild(form);c.appendChild(block);
+  });
+}
+function buildTaskRow(periodKey,idx,task){
+  const row=document.createElement('div');
+  row.className='task-row'+(task.done?' done':'');
+  // Armazena period+idx como data-attributes para evitar closures stale
+  row.dataset.period=periodKey;
+  row.dataset.idx=idx;
+  row.setAttribute('role','checkbox');
+  row.setAttribute('aria-checked',task.done?'true':'false');
+  const chk=document.createElement('div');chk.className='task-chk';chk.textContent=task.done?'✓':'';
+  const txt=document.createElement('span');txt.className='task-text';txt.textContent=task.text;
+  const em=document.createElement('span');em.className='task-emoji';em.textContent=task.emoji;
+  const del=document.createElement('button');
+  del.className='task-del-btn';del.textContent='✕';
+  del.setAttribute('aria-label','Remover tarefa');
+  del.dataset.period=periodKey;del.dataset.idx=idx;
+  row.appendChild(chk);row.appendChild(txt);row.appendChild(em);row.appendChild(del);
+  return row;
+}
+// Handler delegado no container — evita problemas de propagação
+function initRoutineHandlers(){
+  const c=document.getElementById('routine-container');
+  c.addEventListener('click',function(e){
+    // Clique no botão delete ou dentro dele
+    const delBtn=e.target.closest('.task-del-btn');
+    if(delBtn){
+      e.stopPropagation();
+      deleteTask(delBtn.dataset.period, parseInt(delBtn.dataset.idx));
+      return;
+    }
+    // Clique na task-row (toggle)
+    const row=e.target.closest('.task-row');
+    if(row && !e.target.closest('.task-del-btn')){
+      toggleTask(row.dataset.period, parseInt(row.dataset.idx));
+    }
+  });
+}
+function toggleTask(period,idx){
+  TASKS[period][idx].done=!TASKS[period][idx].done;
+  saveTasks();
+  renderRoutine();
+  showToast(TASKS[period][idx].done?'✅ Tarefa concluída!':'↩️ Tarefa desmarcada');
+}
+function deleteTask(period,idx){TASKS[period].splice(idx,1);saveTasks();renderRoutine();showToast('✕ Tarefa removida');}
+function addTask(period){const inp=document.getElementById(`at-${period}`),text=inp.value.trim();if(!text){showToast('⚠️ Escreva a tarefa');return;}const emojis=['📌','⭐','🔔','✏️','🎯','💪','👍'];TASKS[period].push({id:Date.now().toString(),text,emoji:emojis[Math.floor(Math.random()*emojis.length)],done:false});saveTasks();inp.value='';renderRoutine();showToast('✅ Tarefa adicionada!');}
+
+/* ═══ FAMÍLIA ════════════════════════════════════════ */
+function renderFamily(){const g=document.getElementById('family-grid');g.innerHTML='';FAMILY.forEach((p,i)=>{const c=document.createElement('div');c.className='fam-card';c.innerHTML=`<div class="fam-avatar">${p.av}</div><div class="fam-name">${p.name}</div><div class="fam-role">${p.role}</div><div class="fam-tap">Toque aqui</div>`;c.onclick=()=>openFamModal(i);g.appendChild(c);});}
+function openFamModal(i){const p=FAMILY[i];document.getElementById('m-av').textContent=p.av;document.getElementById('m-nm').textContent=p.name;document.getElementById('m-rl').textContent=p.role;document.getElementById('m-ds').textContent=p.desc;document.getElementById('fam-modal').classList.add('open');}
+function closeFamModal(e){if(!e||e.target.id==='fam-modal')document.getElementById('fam-modal').classList.remove('open');}
+
+/* ═══ SOS ════════════════════════════════════════════ */
+function triggerSOS(){document.getElementById('sos-confirmed').classList.add('show');document.getElementById('sos-confirmed').scrollIntoView({behavior:'smooth'});showToast('🚨 Pedido de ajuda enviado!');setTimeout(()=>document.getElementById('sos-confirmed').classList.remove('show'),15000);}
+function callSim(name,phone){showToast(`📞 Ligando para ${name}...`);setTimeout(()=>alert(`📞 Ligando para: ${name}\n📱 ${phone}\n\nPara ligar de verdade, salve o número na agenda.`),300);}
+
+/* ═══ MÚSICA (Web Audio API — offline) ═════════════ */
+const MUSIC_CFG=[{freqs:[261.6,329.6,392.0,523.2],tempo:0.65,label:'🎵 Relaxar — tocando...'},{freqs:[293.7,349.2,440.0,587.3],tempo:0.85,label:'🎶 Lembrar — tocando...'},{freqs:[220.0,261.6,311.1,440.0],tempo:1.05,label:'🎼 Descansar — tocando...'}];
+function playMusic(idx,btn){stopMusic();if(S.currentTrack===idx){S.currentTrack=-1;document.getElementById('music-now').style.display='none';document.querySelectorAll('.music-btn').forEach(b=>b.classList.remove('playing'));return;}S.currentTrack=idx;document.querySelectorAll('.music-btn').forEach(b=>b.classList.remove('playing'));btn.classList.add('playing');try{const ctx=new(window.AudioContext||window.webkitAudioContext)();S.audioCtx=ctx;const cfg=MUSIC_CFG[idx],master=ctx.createGain();master.gain.setValueAtTime(0.06,ctx.currentTime);master.connect(ctx.destination);let t=ctx.currentTime;const total=90;for(let i=0;i<total/cfg.tempo;i++){const freq=cfg.freqs[i%cfg.freqs.length],osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.setValueAtTime(freq,t);gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(0.7,t+0.08);gain.gain.linearRampToValueAtTime(0.3,t+cfg.tempo*.5);gain.gain.linearRampToValueAtTime(0,t+cfg.tempo-.04);osc.connect(gain);gain.connect(master);osc.start(t);osc.stop(t+cfg.tempo);t+=cfg.tempo;}S.musicTimeout=setTimeout(()=>{if(S.currentTrack===idx)playMusic(idx,btn);},total*1000);const mn=document.getElementById('music-now');mn.textContent=cfg.label;mn.style.display='block';}catch(e){showToast('⚠️ Áudio não disponível');}}
+function stopMusic(){if(S.audioCtx){try{S.audioCtx.close();}catch(e){}S.audioCtx=null;}if(S.musicTimeout)clearTimeout(S.musicTimeout);}
+
+/* ═══ JOGO DA MEMÓRIA ════════════════════════════════ */
+const MEM_EMOJIS=['🌸','🦋','☀️','🍎','🎵','🐶'];
+function initMemory(){S.memFlipped=[];S.memMatches=0;S.memMoves=0;S.memLocked=false;document.getElementById('mem-result').style.display='none';document.getElementById('mem-score').textContent='Pares: 0 / 6';document.getElementById('mem-moves').textContent='Tentativas: 0';const pairs=[...MEM_EMOJIS,...MEM_EMOJIS];for(let i=pairs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pairs[i],pairs[j]]=[pairs[j],pairs[i]];}S.memCards=pairs.map((emoji,i)=>({id:i,emoji,flipped:false,matched:false}));renderMemGrid();}
+function renderMemGrid(){const g=document.getElementById('mem-grid');g.innerHTML='';S.memCards.forEach((c,i)=>{const btn=document.createElement('button');btn.className=`mem-tile${c.flipped||c.matched?' flipped':''}${c.matched?' matched':''}`;btn.textContent=(c.flipped||c.matched)?c.emoji:'';btn.setAttribute('aria-label',c.matched?c.emoji:'Carta');btn.onclick=()=>flipMemCard(i);g.appendChild(btn);});}
+function flipMemCard(i){if(S.memLocked||S.memCards[i].flipped||S.memCards[i].matched)return;if(S.memFlipped.length>=2)return;S.memCards[i].flipped=true;S.memFlipped.push(i);renderMemGrid();if(S.memFlipped.length===2){S.memLocked=true;S.memMoves++;document.getElementById('mem-moves').textContent=`Tentativas: ${S.memMoves}`;const[a,b]=S.memFlipped,match=S.memCards[a].emoji===S.memCards[b].emoji;setTimeout(()=>{if(match){S.memCards[a].matched=S.memCards[b].matched=true;S.memMatches++;document.getElementById('mem-score').textContent=`Pares: ${S.memMatches} / 6`;showToast('✅ Par encontrado! 🎉');if(S.memMatches===6){document.getElementById('mem-result').style.display='block';showToast(`🏆 Ganhou em ${S.memMoves} tentativas!`);}}else{S.memCards[a].flipped=S.memCards[b].flipped=false;}S.memFlipped=[];S.memLocked=false;renderMemGrid();},850);}}
+
+/* ═══ IDENTIFICAR OBJETOS ════════════════════════════ */
+function startObjects(){S.objScore=0;S.objIdx=0;goTo('game-objects');}
+function renderObjQ(){const q=[...OBJ_Q].sort(()=>Math.random()-.5)[S.objIdx%OBJ_Q.length];document.getElementById('obj-emoji').textContent=q.emoji;document.getElementById('obj-fb').textContent='';document.getElementById('obj-pts').textContent=`Pontos: ${S.objScore}`;const opts=document.getElementById('obj-opts');opts.innerHTML='';[...q.options].sort(()=>Math.random()-.5).forEach(opt=>{const btn=document.createElement('button');btn.className='obj-opt';btn.textContent=opt;btn.onclick=()=>answerObj(btn,opt,q.answer);opts.appendChild(btn);});}
+function answerObj(btn,chosen,correct){document.querySelectorAll('.obj-opt').forEach(b=>b.onclick=null);const fb=document.getElementById('obj-fb');if(chosen===correct){btn.classList.add('correct');S.objScore++;fb.textContent='✅ Correto! Muito bem, Wlamir! 🎉';fb.style.color='var(--green)';showToast('✅ Certo!');}else{btn.classList.add('wrong');document.querySelectorAll('.obj-opt').forEach(b=>{if(b.textContent===correct)b.classList.add('correct');});fb.textContent=`A resposta era: ${correct}`;fb.style.color='var(--red)';}document.getElementById('obj-pts').textContent=`Pontos: ${S.objScore}`;S.objIdx++;setTimeout(renderObjQ,1900);}
+
+/* ═══ COMPLETAR PALAVRAS ═════════════════════════════ */
+function startWords(){S.wScore=0;S.wIdx=0;goTo('game-words');}
+function renderWordQ(){const puzzle=[...WORDS].sort(()=>Math.random()-.5)[S.wIdx%WORDS.length];S.wCurrent={...puzzle,input:[]};document.getElementById('word-disp').textContent=puzzle.word.split('').map((ch,i)=>puzzle.hidden.includes(i)?'_':ch).join(' ');document.getElementById('word-hint').textContent='💡 '+puzzle.hint;document.getElementById('word-res').textContent='';document.getElementById('word-pts').textContent=`Pontos: ${S.wScore}`;const answers=puzzle.hidden.map(i=>puzzle.word[i]),distract='BCDFGHJKLMNOPQRSTUVXYZ'.split('').filter(l=>!answers.includes(l)).sort(()=>Math.random()-.5).slice(0,4-answers.length),letters=[...answers,...distract].sort(()=>Math.random()-.5);const row=document.getElementById('word-letters');row.innerHTML='';letters.forEach(letter=>{const btn=document.createElement('button');btn.className='let-btn';btn.textContent=letter;btn.onclick=()=>pickLetter(btn,letter,puzzle);row.appendChild(btn);});}
+function pickLetter(btn,letter,puzzle){const cur=S.wCurrent;cur.input.push(letter);btn.disabled=true;const needed=puzzle.hidden.map(i=>puzzle.word[i]);if(cur.input.length<needed.length)return;const ok=[...cur.input].sort().join('')===[...needed].sort().join('');const res=document.getElementById('word-res');if(ok){res.textContent='✅ Muito bem! Você acertou! 🎉';res.style.color='var(--green)';document.getElementById('word-disp').textContent=puzzle.word.split('').join(' ');S.wScore++;showToast('✅ Parabéns!');}else{res.textContent=`A palavra era: ${puzzle.word}`;res.style.color='var(--red)';}document.getElementById('word-pts').textContent=`Pontos: ${S.wScore}`;document.querySelectorAll('.let-btn').forEach(b=>b.disabled=true);S.wIdx++;setTimeout(renderWordQ,2000);}
+
+/* ═══ INICIALIZAÇÃO ══════════════════════════════════ */
+function init(){updateOrientation();setInterval(updateOrientation,30000);renderMeds();renderRoutine();renderFamily();initRoutineHandlers();scheduleReset();}
+function scheduleReset(){const n=new Date(),mid=new Date(n.getFullYear(),n.getMonth(),n.getDate()+1,0,0,5);setTimeout(()=>{Object.values(TASKS).forEach(p=>p.forEach(t=>t.done=false));saveTasks();S.medsTaken.clear();renderMeds();renderRoutine();scheduleReset();},mid-n);}
+init();
+</script>
+</body>
+  </html>
