@@ -9,7 +9,7 @@
 <title>Wlamir & Nide 💛</title>
 <style>
 /* ══════════════════════════════════════════════════
-   CUIDAR COM AMOR — Wlamir & Nide  v2.1
+   CUIDAR COM AMOR — Wlamir & Nide  v2.2
    Responsivo portrait + landscape, bug-free
 ══════════════════════════════════════════════════ */
 :root {
@@ -195,7 +195,6 @@ body { font-family:var(--ff);background:var(--bg);color:var(--text);min-height:1
 .period-header { display:flex;align-items:center;gap:10px;padding:11px 14px 6px;font-size:var(--t-md);font-weight:700; }
 .period-ico    { font-size:28px; }
 
-/* TASK ROW — padding-right reserva espaço pro delete */
 .task-row {
   background:var(--surface);border-radius:16px;margin-bottom:9px;
   padding:15px 50px 15px 15px;
@@ -211,7 +210,6 @@ body { font-family:var(--ff);background:var(--bg);color:var(--text);min-height:1
 .task-row.done .task-chk { background:var(--green);border-color:var(--green);color:#fff; }
 .task-text  { font-size:var(--t-sm);font-weight:600;flex:1;line-height:1.3; }
 .task-emoji { font-size:22px;flex-shrink:0; }
-/* Delete button — isolado com z-index e stopPropagation no JS */
 .task-del-btn { position:absolute;right:9px;top:50%;transform:translateY(-50%);border:none;background:#FFE8E8;color:var(--red);border-radius:9px;width:31px;height:31px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2; }
 .task-del-btn:active { background:#FFCCCC; }
 .add-task-form { background:linear-gradient(135deg,#F0FFF6,#E4FAF0);border:2px solid #9ADCC0;border-radius:15px;margin:6px 0;padding:11px 13px;display:flex;gap:8px;align-items:center; }
@@ -224,9 +222,23 @@ body { font-family:var(--ff);background:var(--bg);color:var(--text);min-height:1
 @media (orientation:landscape) and (min-width:600px) {
   .family-grid { grid-template-columns:repeat(3,1fr); }
 }
-.fam-card { background:var(--surface);border-radius:var(--radius);padding:18px 11px 16px;text-align:center;box-shadow:0 3px 15px var(--shadow);cursor:pointer;transition:transform .15s;border:3px solid transparent; }
+.fam-card { background:var(--surface);border-radius:var(--radius);padding:0 0 14px;text-align:center;box-shadow:0 3px 15px var(--shadow);cursor:pointer;transition:transform .15s;border:3px solid transparent;overflow:hidden; }
 .fam-card:active { transform:scale(.95); }
-.fam-avatar { width:76px;height:76px;border-radius:50%;margin:0 auto 11px;font-size:42px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#FFE8CC,#FFD0A8);box-shadow:0 3px 11px rgba(0,0,0,.1); }
+
+/* Galeria de fotos — carousel por card */
+.fam-gallery { position:relative;width:100%;aspect-ratio:1;overflow:hidden;background:#f0e8e0; }
+.fam-gallery img { width:100%;height:100%;object-fit:cover;display:none;transition:opacity .3s; }
+.fam-gallery img.active { display:block; }
+.fam-gallery-nav { position:absolute;bottom:6px;left:0;right:0;display:flex;justify-content:center;gap:5px;z-index:2; }
+.fam-dot { width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.5);border:none;cursor:pointer;padding:0;transition:background .2s; }
+.fam-dot.active { background:#fff; }
+.fam-gallery-btn { position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.28);border:none;color:#fff;font-size:18px;cursor:pointer;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:3;transition:background .2s; }
+.fam-gallery-btn:active { background:rgba(0,0,0,.5); }
+.fam-gallery-btn.prev { left:5px; }
+.fam-gallery-btn.next { right:5px; }
+/* Avatar emoji para quem não tem foto */
+.fam-avatar { width:76px;height:76px;border-radius:50%;margin:12px auto 11px;font-size:42px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#FFE8CC,#FFD0A8);box-shadow:0 3px 11px rgba(0,0,0,.1); }
+.fam-card-body { padding:10px 10px 2px; }
 .fam-name { font-size:var(--t-md);font-weight:700;line-height:1.1; }
 .fam-role { font-size:var(--t-sm);color:var(--muted);margin-top:3px;font-weight:600; }
 .fam-tap  { font-size:var(--t-xs);color:var(--blue);margin-top:5px;font-style:italic; }
@@ -234,12 +246,18 @@ body { font-family:var(--ff);background:var(--bg);color:var(--text);min-height:1
 /* Modal */
 .modal-bg  { display:none;position:fixed;inset:0;background:rgba(20,10,0,.55);z-index:300;align-items:center;justify-content:center;padding:14px; }
 .modal-bg.open { display:flex;animation:fadeIn .22s ease; }
-.modal-box { background:var(--surface);border-radius:26px;padding:28px 22px;text-align:center;max-width:340px;width:100%;box-shadow:0 20px 54px rgba(0,0,0,.25);animation:fadeUp .28s ease;max-height:90vh;overflow-y:auto; }
-.m-av { font-size:76px;margin-bottom:11px; }
-.m-nm { font-size:var(--t-xl);font-weight:700; }
+.modal-box { background:var(--surface);border-radius:26px;padding:0 0 22px;text-align:center;max-width:340px;width:100%;box-shadow:0 20px 54px rgba(0,0,0,.25);animation:fadeUp .28s ease;max-height:92vh;overflow-y:auto; }
+.modal-photo-wrap { width:100%;aspect-ratio:1;overflow:hidden;border-radius:22px 22px 0 0;background:#f0e8e0; }
+.modal-photo-wrap img { width:100%;height:100%;object-fit:cover;display:none; }
+.modal-photo-wrap img.active { display:block; }
+.modal-photo-nav { display:flex;justify-content:center;gap:7px;padding:10px 0 0; }
+.modal-dot { width:9px;height:9px;border-radius:50%;background:var(--border);border:none;cursor:pointer;padding:0;transition:background .2s; }
+.modal-dot.active { background:var(--warm1); }
+.m-av { font-size:76px;margin:18px 0 11px; }
+.m-nm { font-size:var(--t-xl);font-weight:700;padding:0 18px; }
 .m-rl { font-size:var(--t-md);color:var(--warm1);margin:5px 0 13px;font-weight:700; }
-.m-ds { font-size:var(--t-sm);color:#555;line-height:1.6;margin-bottom:20px; }
-.modal-close { width:100%;padding:16px;border:none;background:var(--warm1);color:#fff;border-radius:15px;font-size:var(--t-md);font-family:var(--ff);font-weight:700;cursor:pointer;box-shadow:0 3px 13px rgba(232,147,106,.33); }
+.m-ds { font-size:var(--t-sm);color:#555;line-height:1.6;margin-bottom:20px;padding:0 18px; }
+.modal-close { margin:0 18px;width:calc(100% - 36px);padding:16px;border:none;background:var(--warm1);color:#fff;border-radius:15px;font-size:var(--t-md);font-family:var(--ff);font-weight:700;cursor:pointer;box-shadow:0 3px 13px rgba(232,147,106,.33); }
 
 /* ═══ SOS ═══════════════════════════════════════════ */
 #sos { flex-direction:column;align-items:center;justify-content:flex-start;min-height:100vh;padding:0 16px 88px;text-align:center; }
@@ -262,13 +280,15 @@ body { font-family:var(--ff);background:var(--bg);color:var(--text);min-height:1
 .sc-text  { font-size:var(--t-sm);color:#444;line-height:1.6; }
 .sos-contacts { margin-top:18px;width:100%;max-width:340px;text-align:left; }
 .sc-section-title { font-size:var(--t-sm);font-weight:700;color:var(--muted);padding:0 0 8px;text-transform:uppercase;letter-spacing:.5px; }
-.sos-contact { background:var(--surface);border:none;border-radius:17px;padding:15px 16px;margin-bottom:9px;width:100%;box-shadow:0 2px 11px var(--shadow);cursor:pointer;display:flex;align-items:center;gap:11px;transition:transform .15s; }
+.sos-contact { background:var(--surface);border:none;border-radius:17px;padding:15px 16px;margin-bottom:9px;width:100%;box-shadow:0 2px 11px var(--shadow);cursor:pointer;display:flex;align-items:center;gap:11px;transition:transform .15s;text-decoration:none; }
 .sos-contact:active { transform:scale(.97); }
 .sc-av    { font-size:28px;flex-shrink:0; }
 .sc-inf   { flex:1; }
-.sc-name  { font-size:var(--t-sm);font-weight:700; }
+.sc-name  { font-size:var(--t-sm);font-weight:700;color:var(--text); }
 .sc-phone { font-size:var(--t-xs);color:var(--muted); }
 .sc-call  { font-size:24px;margin-left:auto; }
+/* WhatsApp badge */
+.wpp-badge { background:#25D366;color:#fff;border-radius:8px;font-size:13px;font-weight:700;padding:3px 8px;margin-left:6px;font-family:var(--ff); }
 
 /* ═══ EXERCÍCIOS ════════════════════════════════════ */
 .cog-grid { display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:6px 14px; }
@@ -347,50 +367,32 @@ body { font-family:var(--ff);background:var(--bg);color:var(--text);min-height:1
   .med-list,.period-block,.cog-grid,.obj-opts,.sos-contacts,.sos-confirmed { max-width:580px;margin-left:auto;margin-right:auto; }
 }
 
-/* ═══ LANDSCAPE COMPLETO ══════════════════════════════
-   Tudo visível sem scroll em telefone deitado (≤500px altura)
-══════════════════════════════════════════════════ */
+/* ═══ LANDSCAPE COMPLETO ═════════════════════════════ */
 @media (orientation:landscape) and (max-height:500px) {
-
-  /* Home — layout horizontal compacto */
   #home { padding-bottom:52px; }
   .home-greeting { padding:4px 12px 2px; display:flex; align-items:center; gap:10px; justify-content:center; }
   .home-greeting .waving { font-size:24px; }
   .hello-name { font-size:var(--t-md); margin:0; }
   .hello-sub  { display:none; }
   .location-chip { margin:4px auto 6px; padding:4px 12px; font-size:var(--t-xs); }
-
-  /* Grid 4 colunas compactas */
   .main-grid { grid-template-columns:repeat(4,1fr); gap:7px; padding:0 10px; }
   .m-btn { min-height:76px; padding:10px 8px; gap:5px; }
   .m-btn .m-icon  { font-size:26px; }
   .m-btn .m-label { font-size:13px; }
-
-  /* SOS compacto */
   .sos-home-btn { padding:10px 16px; margin-top:6px; font-size:var(--t-sm); }
-
-  /* Música — linha única horizontal */
   .music-section { margin:6px 10px 0; padding:10px 10px; }
   .music-title   { display:none; }
   .music-grid    { gap:6px; }
   .music-btn     { padding:8px 6px; font-size:12px; flex-direction:row; gap:4px; }
   .music-note    { font-size:16px; }
-
-  /* Modo idoso compacto */
   .elder-wrap { margin:6px 10px 0; }
   .elder-btn  { padding:6px 16px; font-size:12px; }
-
-  /* Nav menor */
   .bottom-nav { padding:2px 2px 4px; }
   .nb { font-size:9px; padding:3px 2px; }
   .nb-ic { font-size:16px; }
   #home { padding-bottom:46px; }
   .screen { padding-bottom:46px; }
-
-  /* s-header em landscape (sem topbar) */
   .s-header { top:0; padding:8px 12px 6px; }
-
-  /* Rotina landscape — 2 colunas de períodos */
   .period-header { padding:6px 10px 4px; font-size:var(--t-sm); }
   .period-ico    { font-size:20px; }
   .task-row      { padding:10px 44px 10px 12px; margin-bottom:6px; }
@@ -400,45 +402,29 @@ body { font-family:var(--ff);background:var(--bg);color:var(--text);min-height:1
   .period-block  { margin:4px 10px 0; }
   .add-task-form { padding:8px 10px; margin:4px 0; }
   .add-task-input{ padding:7px 9px; font-size:var(--t-xs); }
-
-  /* Remédios landscape */
   .med-card     { padding:12px 12px; }
   .med-card .m-name { font-size:var(--t-sm); }
   .med-card .m-time { font-size:var(--t-xs); }
   .btn-took     { padding:8px 10px; font-size:var(--t-xs); }
-
-  /* Família landscape — 4 colunas */
   .family-grid  { grid-template-columns:repeat(4,1fr); gap:8px; padding:4px 10px; }
-  .fam-avatar   { width:56px; height:56px; font-size:30px; margin-bottom:6px; }
   .fam-name     { font-size:var(--t-sm); }
   .fam-role     { font-size:var(--t-xs); }
   .fam-tap      { font-size:11px; }
-
-  /* Exercícios landscape — 3 colunas */
   .cog-grid  { grid-template-columns:repeat(3,1fr); gap:8px; padding:4px 10px; }
   .cog-card  { min-height:80px; padding:14px 8px; gap:5px; }
   .cog-icon  { font-size:28px; }
   .cc3 { grid-column:span 1; }
   .cog-info  { margin:6px 10px; padding:10px 12px; }
-
-  /* Memória landscape — 4 cols mas tiles menores */
   .mem-grid  { gap:7px; padding:0 10px; }
   .mem-score-row { padding:5px 14px; }
-
-  /* Objetos landscape */
   .obj-q-box { padding:14px 12px; margin:5px 10px; }
   .obj-big   { font-size:56px; }
   .obj-opts  { padding:0 10px 4px; gap:7px; }
   .obj-opt   { padding:11px 8px; font-size:var(--t-xs); }
-
-  /* Palavras landscape */
   .word-box     { padding:16px 12px; margin:5px 10px; }
   .word-display { font-size:var(--t-lg); letter-spacing:8px; }
   .let-btn      { width:46px; height:46px; font-size:var(--t-sm); }
-
-  /* SOS landscape */
-  #sos { flex-direction:row; flex-wrap:wrap; justify-content:center;
-         align-items:flex-start; gap:10px; padding:0 12px 46px; }
+  #sos { flex-direction:row; flex-wrap:wrap; justify-content:center; align-items:flex-start; gap:10px; padding:0 12px 46px; }
   #sos .s-header { flex:0 0 100%; }
   .sos-heading { font-size:var(--t-lg); margin:6px 0 3px; flex:0 0 100%; }
   .sos-sub     { display:none; }
@@ -549,8 +535,18 @@ body { font-family:var(--ff);background:var(--bg);color:var(--text);min-height:1
   <div class="sec-label">Pessoas que te amam:</div>
   <div class="family-grid" id="family-grid"></div>
 </div>
+
+<!-- Modal Família -->
 <div class="modal-bg" id="fam-modal" onclick="closeFamModal(event)">
-  <div class="modal-box"><div class="m-av" id="m-av"></div><div class="m-nm" id="m-nm"></div><div class="m-rl" id="m-rl"></div><div class="m-ds" id="m-ds"></div><button class="modal-close" onclick="closeFamModal()">✓ Entendi, obrigado!</button></div>
+  <div class="modal-box">
+    <div class="modal-photo-wrap" id="modal-photo-wrap"></div>
+    <div class="modal-photo-nav" id="modal-photo-nav"></div>
+    <div class="m-av" id="m-av" style="display:none"></div>
+    <div class="m-nm" id="m-nm"></div>
+    <div class="m-rl" id="m-rl"></div>
+    <div class="m-ds" id="m-ds"></div>
+    <button class="modal-close" onclick="closeFamModal()">✓ Entendi, obrigado!</button>
+  </div>
 </div>
 
 <!-- SOS -->
@@ -564,11 +560,27 @@ body { font-family:var(--ff);background:var(--bg);color:var(--text);min-height:1
     <div class="sc-text">Sua família foi avisada.<br>Alguém vai chegar em breve.<br><br><strong>Você está em casa. Está seguro. 💛</strong></div>
   </div>
   <div class="sos-contacts">
-    <div class="sc-section-title">Ligar para:</div>
-    <button class="sos-contact" onclick="callSim('Yan','71 99278-4660')"><span class="sc-av">👦</span><span class="sc-inf"><div class="sc-name">Yan</div><div class="sc-phone">📞 71 99278-4660</div></span><span class="sc-call">📞</span></button>
-    <button class="sos-contact" onclick="callSim('Yan e Paloma','71 8722-0342')"><span class="sc-av">👫</span><span class="sc-inf"><div class="sc-name">Yan e Paloma</div><div class="sc-phone">📞 71 8722-0342</div></span><span class="sc-call">📞</span></button>
-    <button class="sos-contact" onclick="callSim('Eliane','71 99284-2562')"><span class="sc-av">👩</span><span class="sc-inf"><div class="sc-name">Eliane</div><div class="sc-phone">📞 71 99284-2562</div></span><span class="sc-call">📞</span></button>
-    <button class="sos-contact" onclick="callSim('Sueli','71 92947-173')"><span class="sc-av">👩‍🦳</span><span class="sc-inf"><div class="sc-name">Sueli</div><div class="sc-phone">📞 71 92947-173</div></span><span class="sc-call">📞</span></button>
+    <div class="sc-section-title">Falar pelo WhatsApp:</div>
+    <a class="sos-contact" href="https://wa.me/5571992784660" target="_blank">
+      <span class="sc-av">👦</span>
+      <span class="sc-inf"><div class="sc-name">Yan</div><div class="sc-phone">71 99278-4660</div></span>
+      <span class="wpp-badge">WhatsApp</span>
+    </a>
+    <a class="sos-contact" href="https://wa.me/5571987220342" target="_blank">
+      <span class="sc-av">👫</span>
+      <span class="sc-inf"><div class="sc-name">Yan e Paloma</div><div class="sc-phone">71 8722-0342</div></span>
+      <span class="wpp-badge">WhatsApp</span>
+    </a>
+    <a class="sos-contact" href="https://wa.me/5571992842562" target="_blank">
+      <span class="sc-av">👩</span>
+      <span class="sc-inf"><div class="sc-name">Eliane</div><div class="sc-phone">71 99284-2562</div></span>
+      <span class="wpp-badge">WhatsApp</span>
+    </a>
+    <a class="sos-contact" href="https://wa.me/5571929470173" target="_blank">
+      <span class="sc-av">👩‍🦳</span>
+      <span class="sc-inf"><div class="sc-name">Sueli</div><div class="sc-phone">71 92947-0173</div></span>
+      <span class="wpp-badge">WhatsApp</span>
+    </a>
   </div>
 </div>
 
@@ -631,14 +643,59 @@ function loadTasks(){try{const d=localStorage.getItem('wlamir_tasks_v2');if(d)re
 function saveTasks(){try{localStorage.setItem('wlamir_tasks_v2',JSON.stringify(TASKS));}catch(e){}}
 let MEDS=loadMeds(),TASKS=loadTasks();
 
+/* ═══ DADOS DA FAMÍLIA ═══════════════════════════════ */
 const FAMILY=[
-  {av:'👩‍🦳',name:'Nide',role:'Esposa',desc:'Nide é sua esposa e sua companheira de vida. Ela cuida de você com muito amor todos os dias. Ela está sempre ao seu lado. 💛'},
-  {av:'👦',name:'Yan',role:'Sobrinho',desc:'Yan é seu sobrinho e te ama muito. Ele sempre liga para saber como você está e quer o seu bem. 💙'},
-  {av:'👩',name:'Paloma',role:'Sobrinha',desc:'Paloma é sobrinha e está sempre pensando em você. Um coração enorme cheio de carinho. 💗'},
-  {av:'👩‍🦱',name:'Eliane',role:'Familiar',desc:'Eliane é da família e se preocupa muito com você. Pode ligar para ela quando precisar! 🌸'},
-  {av:'👩‍🦳',name:'Sueli',role:'Familiar',desc:'Sueli faz parte da família e torce por você todos os dias. 🌻'},
-  {av:'👨‍⚕️',name:'Médico',role:'Saúde',desc:'Seu médico cuida da sua saúde. Se sentir qualquer coisa diferente, fale com a Nide para ligar para ele. 🏥'},
+  {
+    av:'👩‍🦳', name:'Nide', role:'Esposa',
+    desc:'Nide é sua esposa e sua companheira de vida. Ela cuida de você com muito amor todos os dias. Ela está sempre ao seu lado. 💛',
+    photos:['https://res.cloudinary.com/dzracc9pu/image/upload/v1773289012/IMG-20260310-WA0024_by8fyy.jpg']
+  },
+  {
+    av:'👦', name:'Junior', role:'Filho',
+    desc:'Junior é seu filho e te ama muito. Ele sempre pensa em você e quer o seu bem. 💙',
+    photos:['https://res.cloudinary.com/dzracc9pu/image/upload/v1773289012/IMG-20260310-WA0023_ft0db4.jpg']
+  },
+  {
+    av:'👦', name:'Ueslei', role:'Filho',
+    desc:'Ueslei é seu filho e se preocupa muito com você. Um coração enorme cheio de carinho. 💗',
+    photos:[
+      'https://res.cloudinary.com/dzracc9pu/image/upload/v1773289012/IMG-20260310-WA0021_robnao.jpg',
+      'https://res.cloudinary.com/dzracc9pu/image/upload/v1773289012/IMG-20260310-WA0020_xahgvg.jpg'
+    ]
+  },
+  {
+    av:'👩', name:'Gisele', role:'Nora (esposa do Junior)',
+    desc:'Gisele é esposa do Junior e faz parte da sua família com muito carinho. 🌸',
+    photos:[
+      'https://res.cloudinary.com/dzracc9pu/image/upload/v1773289011/IMG-20260310-WA0027_jahfzw.jpg',
+      'https://res.cloudinary.com/dzracc9pu/image/upload/v1773289011/IMG-20260310-WA0026_vtpueb.jpg'
+    ]
+  },
+  {
+    av:'👩', name:'Cristiane', role:'Nora (esposa do Ueslei)',
+    desc:'Cristiane é esposa do Ueslei e torce por você todos os dias. 🌻',
+    photos:['https://res.cloudinary.com/dzracc9pu/image/upload/v1773289011/IMG-20260310-WA0028_wksvxt.jpg']
+  },
+  {
+    av:'👧', name:'Mirele', role:'Neta (filha do Junior)',
+    desc:'Mirele é sua neta linda, filha do Junior e da Gisele. Ela te ama muito! 🌟',
+    photos:['https://res.cloudinary.com/dzracc9pu/image/upload/v1773289011/IMG-20260310-WA0025_r2pipp.jpg']
+  },
+  {
+    av:'👧', name:'Naira', role:'Neta (filha do Ueslei)',
+    desc:'Naira é sua neta querida, filha do Ueslei e da Cristiane. Ela tem um sorriso lindo! ✨',
+    photos:['https://res.cloudinary.com/dzracc9pu/image/upload/v1773289012/IMG-20260310-WA0022_fqjdha.jpg']
+  },
+  {
+    av:'👨‍⚕️', name:'Médico', role:'Saúde',
+    desc:'Seu médico cuida da sua saúde. Se sentir qualquer coisa diferente, fale com a Nide para ligar para ele. 🏥',
+    photos:[]
+  },
 ];
+
+/* Estado dos carrosséis */
+const galleryState = {};
+
 const OBJ_Q=[{emoji:'🍎',answer:'Maçã',options:['Maçã','Bola','Chapéu','Livro']},{emoji:'🚗',answer:'Carro',options:['Barco','Carro','Avião','Trem']},{emoji:'🌹',answer:'Rosa',options:['Tulipa','Girassol','Rosa','Margarida']},{emoji:'🐕',answer:'Cachorro',options:['Gato','Pássaro','Cachorro','Peixe']},{emoji:'📚',answer:'Livro',options:['Caderno','Livro','Revista','Jornal']},{emoji:'🌞',answer:'Sol',options:['Lua','Nuvem','Sol','Estrela']},{emoji:'🏠',answer:'Casa',options:['Escola','Igreja','Casa','Hospital']},{emoji:'🎂',answer:'Bolo',options:['Pão','Bolo','Torta','Biscoito']},{emoji:'🌊',answer:'Mar',options:['Rio','Lago','Chuva','Mar']},{emoji:'🦋',answer:'Borboleta',options:['Abelha','Besouro','Borboleta','Mosca']}];
 const WORDS=[{word:'AMOR',hidden:[1,3],hint:'O que sentimos pela família ❤️'},{word:'CASA',hidden:[0,2],hint:'Onde você mora 🏠'},{word:'AGUA',hidden:[1,3],hint:'Bebemos quando temos sede 💧'},{word:'FELIZ',hidden:[2,4],hint:'Como você se sente bem 😊'},{word:'SOL',hidden:[1],hint:'Brilha no céu de dia ☀️'},{word:'FLOR',hidden:[0,3],hint:'Bonita e com cheiro bom 🌸'},{word:'CAFE',hidden:[0,2],hint:'Bebida quente da manhã ☕'},{word:'PEIXE',hidden:[2,4],hint:'Animal do mar 🐟'},{word:'NIDE',hidden:[0,2],hint:'O nome da sua esposa 💛'},{word:'PAZ',hidden:[1],hint:'O que sentimos quando estamos bem 🕊️'}];
 
@@ -678,10 +735,7 @@ function takeMed(id){S.medsTaken.add(id);renderMeds();showToast('✅ Remédio ma
 function addMed(){const nome=document.getElementById('med-nome').value.trim(),horario=document.getElementById('med-horario').value.trim(),dose=document.getElementById('med-dose').value.trim();if(!nome||!horario){showToast('⚠️ Preencha o nome e o horário');return;}MEDS.push({id:Date.now(),name:nome,dose:dose||'—',time:horario,icon:'💊',dueNow:false});saveMeds();document.getElementById('med-nome').value='';document.getElementById('med-horario').value='';document.getElementById('med-dose').value='';renderMeds();showToast('💊 Remédio adicionado!');}
 function deleteMed(id){if(!confirm('Remover este remédio?'))return;MEDS=MEDS.filter(m=>m.id!==id);S.medsTaken.delete(id);saveMeds();renderMeds();showToast('🗑 Remédio removido');}
 
-/* ═══ ROTINA — BUG CORRIGIDO ════════════════════════
-   buildTaskRow usa addEventListener com stopPropagation
-   no botão delete, sem conflito com o toggle do row.
-══════════════════════════════════════════════════ */
+/* ═══ ROTINA ════════════════════════════════════════ */
 function renderRoutine(){
   const c=document.getElementById('routine-container');c.innerHTML='';
   [{key:'manha',label:'MANHÃ',icon:'☀️',color:'#C07828'},{key:'tarde',label:'TARDE',icon:'🌤',color:'#4A88B0'},{key:'noite',label:'NOITE',icon:'🌙',color:'#7A52AA'}].forEach(p=>{
@@ -697,58 +751,140 @@ function renderRoutine(){
 function buildTaskRow(periodKey,idx,task){
   const row=document.createElement('div');
   row.className='task-row'+(task.done?' done':'');
-  // Armazena period+idx como data-attributes para evitar closures stale
-  row.dataset.period=periodKey;
-  row.dataset.idx=idx;
-  row.setAttribute('role','checkbox');
-  row.setAttribute('aria-checked',task.done?'true':'false');
+  row.dataset.period=periodKey;row.dataset.idx=idx;
+  row.setAttribute('role','checkbox');row.setAttribute('aria-checked',task.done?'true':'false');
   const chk=document.createElement('div');chk.className='task-chk';chk.textContent=task.done?'✓':'';
   const txt=document.createElement('span');txt.className='task-text';txt.textContent=task.text;
   const em=document.createElement('span');em.className='task-emoji';em.textContent=task.emoji;
-  const del=document.createElement('button');
-  del.className='task-del-btn';del.textContent='✕';
-  del.setAttribute('aria-label','Remover tarefa');
-  del.dataset.period=periodKey;del.dataset.idx=idx;
+  const del=document.createElement('button');del.className='task-del-btn';del.textContent='✕';del.setAttribute('aria-label','Remover tarefa');del.dataset.period=periodKey;del.dataset.idx=idx;
   row.appendChild(chk);row.appendChild(txt);row.appendChild(em);row.appendChild(del);
   return row;
 }
-// Handler delegado no container — evita problemas de propagação
 function initRoutineHandlers(){
   const c=document.getElementById('routine-container');
   c.addEventListener('click',function(e){
-    // Clique no botão delete ou dentro dele
     const delBtn=e.target.closest('.task-del-btn');
-    if(delBtn){
-      e.stopPropagation();
-      deleteTask(delBtn.dataset.period, parseInt(delBtn.dataset.idx));
-      return;
-    }
-    // Clique na task-row (toggle)
+    if(delBtn){e.stopPropagation();deleteTask(delBtn.dataset.period,parseInt(delBtn.dataset.idx));return;}
     const row=e.target.closest('.task-row');
-    if(row && !e.target.closest('.task-del-btn')){
-      toggleTask(row.dataset.period, parseInt(row.dataset.idx));
-    }
+    if(row&&!e.target.closest('.task-del-btn')){toggleTask(row.dataset.period,parseInt(row.dataset.idx));}
   });
 }
-function toggleTask(period,idx){
-  TASKS[period][idx].done=!TASKS[period][idx].done;
-  saveTasks();
-  renderRoutine();
-  showToast(TASKS[period][idx].done?'✅ Tarefa concluída!':'↩️ Tarefa desmarcada');
-}
+function toggleTask(period,idx){TASKS[period][idx].done=!TASKS[period][idx].done;saveTasks();renderRoutine();showToast(TASKS[period][idx].done?'✅ Tarefa concluída!':'↩️ Tarefa desmarcada');}
 function deleteTask(period,idx){TASKS[period].splice(idx,1);saveTasks();renderRoutine();showToast('✕ Tarefa removida');}
 function addTask(period){const inp=document.getElementById(`at-${period}`),text=inp.value.trim();if(!text){showToast('⚠️ Escreva a tarefa');return;}const emojis=['📌','⭐','🔔','✏️','🎯','💪','👍'];TASKS[period].push({id:Date.now().toString(),text,emoji:emojis[Math.floor(Math.random()*emojis.length)],done:false});saveTasks();inp.value='';renderRoutine();showToast('✅ Tarefa adicionada!');}
 
-/* ═══ FAMÍLIA ════════════════════════════════════════ */
-function renderFamily(){const g=document.getElementById('family-grid');g.innerHTML='';FAMILY.forEach((p,i)=>{const c=document.createElement('div');c.className='fam-card';c.innerHTML=`<div class="fam-avatar">${p.av}</div><div class="fam-name">${p.name}</div><div class="fam-role">${p.role}</div><div class="fam-tap">Toque aqui</div>`;c.onclick=()=>openFamModal(i);g.appendChild(c);});}
-function openFamModal(i){const p=FAMILY[i];document.getElementById('m-av').textContent=p.av;document.getElementById('m-nm').textContent=p.name;document.getElementById('m-rl').textContent=p.role;document.getElementById('m-ds').textContent=p.desc;document.getElementById('fam-modal').classList.add('open');}
+/* ═══ FAMÍLIA — GALERIA ═════════════════════════════ */
+function renderFamily(){
+  const g=document.getElementById('family-grid');g.innerHTML='';
+  FAMILY.forEach((p,i)=>{
+    galleryState[i]=0;
+    const card=document.createElement('div');card.className='fam-card';
+
+    if(p.photos && p.photos.length>0){
+      /* Galeria com fotos */
+      const gallery=document.createElement('div');gallery.className='fam-gallery';gallery.id=`gal-${i}`;
+      p.photos.forEach((src,pi)=>{
+        const img=document.createElement('img');img.src=src;img.alt=p.name;img.loading='lazy';
+        if(pi===0)img.className='active';
+        img.addEventListener('error',function(){this.style.display='none';});
+        gallery.appendChild(img);
+      });
+      /* Botões nav se tiver mais de 1 foto */
+      if(p.photos.length>1){
+        const prev=document.createElement('button');prev.className='fam-gallery-btn prev';prev.textContent='‹';prev.setAttribute('aria-label','Foto anterior');
+        prev.onclick=(e)=>{e.stopPropagation();changeGallery(i,-1,false);};
+        const next=document.createElement('button');next.className='fam-gallery-btn next';next.textContent='›';next.setAttribute('aria-label','Próxima foto');
+        next.onclick=(e)=>{e.stopPropagation();changeGallery(i,1,false);};
+        gallery.appendChild(prev);gallery.appendChild(next);
+        /* Dots */
+        const nav=document.createElement('div');nav.className='fam-gallery-nav';nav.id=`gdots-${i}`;
+        p.photos.forEach((_,pi)=>{const dot=document.createElement('button');dot.className='fam-dot'+(pi===0?' active':'');dot.onclick=(e)=>{e.stopPropagation();setGallery(i,pi,false);};nav.appendChild(dot);});
+        gallery.appendChild(nav);
+      }
+      card.appendChild(gallery);
+    } else {
+      /* Sem foto — emoji */
+      const av=document.createElement('div');av.className='fam-avatar';av.textContent=p.av;card.appendChild(av);
+    }
+
+    const body=document.createElement('div');body.className='fam-card-body';
+    body.innerHTML=`<div class="fam-name">${p.name}</div><div class="fam-role">${p.role}</div><div class="fam-tap">Toque para saber mais</div>`;
+    card.appendChild(body);
+    card.onclick=()=>openFamModal(i);
+    g.appendChild(card);
+  });
+}
+
+function changeGallery(personIdx, dir, isModal){
+  const p=FAMILY[personIdx];if(!p.photos||p.photos.length<2)return;
+  const cur=galleryState[personIdx]||0;
+  const next=(cur+dir+p.photos.length)%p.photos.length;
+  setGallery(personIdx,next,isModal);
+}
+function setGallery(personIdx,photoIdx,isModal){
+  const p=FAMILY[personIdx];galleryState[personIdx]=photoIdx;
+  if(!isModal){
+    /* Card gallery */
+    const gal=document.getElementById(`gal-${personIdx}`);
+    if(gal){
+      gal.querySelectorAll('img').forEach((img,i)=>{img.className=i===photoIdx?'active':'';});
+      const dotsEl=document.getElementById(`gdots-${personIdx}`);
+      if(dotsEl)dotsEl.querySelectorAll('.fam-dot').forEach((d,i)=>{d.className='fam-dot'+(i===photoIdx?' active':'');});
+    }
+  } else {
+    /* Modal gallery */
+    const wrap=document.getElementById('modal-photo-wrap');
+    if(wrap){wrap.querySelectorAll('img').forEach((img,i)=>{img.className=i===photoIdx?'active':'';});}
+    const nav=document.getElementById('modal-photo-nav');
+    if(nav)nav.querySelectorAll('.modal-dot').forEach((d,i)=>{d.className='modal-dot'+(i===photoIdx?' active':'');});
+  }
+}
+
+function openFamModal(i){
+  const p=FAMILY[i];
+  const wrap=document.getElementById('modal-photo-wrap');
+  const photoNav=document.getElementById('modal-photo-nav');
+  const mAv=document.getElementById('m-av');
+  wrap.innerHTML='';photoNav.innerHTML='';
+
+  if(p.photos && p.photos.length>0){
+    mAv.style.display='none';
+    wrap.style.display='block';
+    const curPhoto=galleryState[i]||0;
+    p.photos.forEach((src,pi)=>{
+      const img=document.createElement('img');img.src=src;img.alt=p.name;
+      if(pi===curPhoto)img.className='active';
+      img.addEventListener('error',function(){this.style.display='none';});
+      wrap.appendChild(img);
+    });
+    if(p.photos.length>1){
+      /* Prev/Next arrows */
+      const prev=document.createElement('button');prev.className='fam-gallery-btn prev';prev.textContent='‹';prev.style.position='absolute';prev.style.top='50%';prev.style.left='8px';prev.style.transform='translateY(-50%)';
+      prev.onclick=(e)=>{e.stopPropagation();changeGallery(i,-1,true);};
+      const next=document.createElement('button');next.className='fam-gallery-btn next';next.textContent='›';next.style.position='absolute';next.style.top='50%';next.style.right='8px';next.style.transform='translateY(-50%)';
+      next.onclick=(e)=>{e.stopPropagation();changeGallery(i,1,true);};
+      wrap.style.position='relative';
+      wrap.appendChild(prev);wrap.appendChild(next);
+      /* Dots */
+      p.photos.forEach((_,pi)=>{const dot=document.createElement('button');dot.className='modal-dot'+(pi===curPhoto?' active':'');dot.onclick=(e)=>{e.stopPropagation();setGallery(i,pi,true);};photoNav.appendChild(dot);});
+    }
+  } else {
+    wrap.style.display='none';
+    mAv.style.display='block';
+    mAv.textContent=p.av;
+  }
+
+  document.getElementById('m-nm').textContent=p.name;
+  document.getElementById('m-rl').textContent=p.role;
+  document.getElementById('m-ds').textContent=p.desc;
+  document.getElementById('fam-modal').classList.add('open');
+}
 function closeFamModal(e){if(!e||e.target.id==='fam-modal')document.getElementById('fam-modal').classList.remove('open');}
 
 /* ═══ SOS ════════════════════════════════════════════ */
 function triggerSOS(){document.getElementById('sos-confirmed').classList.add('show');document.getElementById('sos-confirmed').scrollIntoView({behavior:'smooth'});showToast('🚨 Pedido de ajuda enviado!');setTimeout(()=>document.getElementById('sos-confirmed').classList.remove('show'),15000);}
-function callSim(name,phone){showToast(`📞 Ligando para ${name}...`);setTimeout(()=>alert(`📞 Ligando para: ${name}\n📱 ${phone}\n\nPara ligar de verdade, salve o número na agenda.`),300);}
 
-/* ═══ MÚSICA (Web Audio API — offline) ═════════════ */
+/* ═══ MÚSICA ════════════════════════════════════════ */
 const MUSIC_CFG=[{freqs:[261.6,329.6,392.0,523.2],tempo:0.65,label:'🎵 Relaxar — tocando...'},{freqs:[293.7,349.2,440.0,587.3],tempo:0.85,label:'🎶 Lembrar — tocando...'},{freqs:[220.0,261.6,311.1,440.0],tempo:1.05,label:'🎼 Descansar — tocando...'}];
 function playMusic(idx,btn){stopMusic();if(S.currentTrack===idx){S.currentTrack=-1;document.getElementById('music-now').style.display='none';document.querySelectorAll('.music-btn').forEach(b=>b.classList.remove('playing'));return;}S.currentTrack=idx;document.querySelectorAll('.music-btn').forEach(b=>b.classList.remove('playing'));btn.classList.add('playing');try{const ctx=new(window.AudioContext||window.webkitAudioContext)();S.audioCtx=ctx;const cfg=MUSIC_CFG[idx],master=ctx.createGain();master.gain.setValueAtTime(0.06,ctx.currentTime);master.connect(ctx.destination);let t=ctx.currentTime;const total=90;for(let i=0;i<total/cfg.tempo;i++){const freq=cfg.freqs[i%cfg.freqs.length],osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.setValueAtTime(freq,t);gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(0.7,t+0.08);gain.gain.linearRampToValueAtTime(0.3,t+cfg.tempo*.5);gain.gain.linearRampToValueAtTime(0,t+cfg.tempo-.04);osc.connect(gain);gain.connect(master);osc.start(t);osc.stop(t+cfg.tempo);t+=cfg.tempo;}S.musicTimeout=setTimeout(()=>{if(S.currentTrack===idx)playMusic(idx,btn);},total*1000);const mn=document.getElementById('music-now');mn.textContent=cfg.label;mn.style.display='block';}catch(e){showToast('⚠️ Áudio não disponível');}}
 function stopMusic(){if(S.audioCtx){try{S.audioCtx.close();}catch(e){}S.audioCtx=null;}if(S.musicTimeout)clearTimeout(S.musicTimeout);}
@@ -775,4 +911,4 @@ function scheduleReset(){const n=new Date(),mid=new Date(n.getFullYear(),n.getMo
 init();
 </script>
 </body>
-  </html>
+   </html>
